@@ -3,19 +3,26 @@ package cmd
 import (
 	"fmt"
 	"github.com/acygol/huntstat/framework"
+	"strings"
 )
 
 func RegisterCommand(ctx framework.Context) {
 	if len(ctx.Args) < 2 {
-		ctx.Reply("Invalid syntax: s!register <@discord_name | name#0000> <hunter_name>")
+		ctx.Reply("Invalid syntax: s!register <@user> <hunter_name>")
 		return
 	}
 
-	// fmt.Printf("[ctx: %v], [guildid: %s], [args(0): %s], [args(1): %s]", ctx, ctx.Guild.ID, ctx.Args[0], ctx.Args[1])
+	// it's an invalid mention
+	if !strings.HasPrefix(ctx.Args[0], "<@") {
+		ctx.Reply("Invalid user")
+		return
+	}
 
 	/*
-		TODO: validate arguments
+		TODO: validate hunter profile, widget page returns 'invalid user' as body text
 	*/
+
+	// adds a new user to the database
 	err := framework.NewUser(ctx, ctx.Guild.ID, ctx.Args[0], ctx.Args[1])
 	if err != nil {
 		ctx.Reply("Failed to register new user. Contact the bot maintainer for more information")
