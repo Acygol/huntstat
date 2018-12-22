@@ -17,7 +17,7 @@ func WidgetCommand(ctx framework.Context) {
 	var huntername string
 	var reply strings.Builder
 
-	if strings.HasPrefix(ctx.Args[0], "<@") {
+	if framework.IsDiscordMention(ctx.Args[0]) {
 		// Mentions that start with '<@' are valid server members
 		err := ctx.Conf.DbHandle.QueryRow("SELECT hunter_name FROM users WHERE discord_name = ? AND guild_id = ?", ctx.Args[0], ctx.Guild.ID).Scan(&huntername)
 		if err != nil {

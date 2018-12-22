@@ -2,6 +2,7 @@ package framework
 
 import (
 	"log"
+	"strings"
 )
 
 func NewUser(ctx Context, guildid, discordname, huntername string) error {
@@ -16,8 +17,18 @@ func NewUser(ctx Context, guildid, discordname, huntername string) error {
 	return err
 }
 
-func IsUserRegistered(ctx Context, discordname string) bool {
+func IsDiscordMention(discordname string) bool {
+	return strings.HasPrefix(discordname, "<@")
+}
+
+//
+// username can be either a hunter profile or a discord mention
+func IsUserRegistered(ctx Context, username string) bool {
 	var rows int
-	ctx.Conf.DbHandle.QueryRow("SELECT COUNT(*) FROM users WHERE discord_name = ? AND guild_id = ?", discordname, ctx.Guild.ID).Scan(&rows)
+	if IsDiscordMention(username) {
+		ctx.Conf.DbHandle.QueryRow("SELECT COUNT(*) FROM users WHERE discord_name = ? AND guild_id = ?", username, ctx.Guild.ID).Scan(&rows)
+	} else {
+		ctx.Conf.DbHandle.QueryRow("SELECT COUNT(*) FROM users WHERE hunter_name = ? AND guild_id = ?", username, ctx.Guild.ID).Scan(&rows)
+	}
 	return rows > 0
 }

@@ -3,7 +3,6 @@ package cmd
 import (
 	"fmt"
 	"github.com/acygol/huntstat/framework"
-	"strings"
 )
 
 func RegisterCommand(ctx framework.Context) {
@@ -13,7 +12,7 @@ func RegisterCommand(ctx framework.Context) {
 	}
 
 	// it's an invalid mention
-	if !strings.HasPrefix(ctx.Args[0], "<@") {
+	if !framework.IsDiscordMention(ctx.Args[0]) {
 		ctx.Reply("Invalid user")
 		return
 	}
