@@ -15,12 +15,15 @@ HuntStat is a bot aimed to automate theHunter communities by:
     1. `s!modifier(s)`
 
 A limitation to the bot is that it requires you to register your members:  
-- `s!register <discord_tag#0000> <theHunter_name>`
 - `s!register <@discord_name> <theHunter_name>`
 
+If a mistake was made or a user has left your community, you can unregister them:
+- `s!unregister <@discord_name | theHunter_name>`
+
+## WIP 
 Once registered, the bot can generate some useful statistics about your community:
 1. a hunter's widget: 
-    1. `s!widget <@discord_name | tag#0000 | theHunter_name>`
+    1. `s!widget <@discord_name>`
 2. a leaderboard of all your members: 
     1. `s!leaderboard(s)`
     
