@@ -145,8 +145,11 @@ func registerCommands() {
 	CmdHandler.Register("themes", cmd.ThemeCommand)
 	CmdHandler.Register("theme", cmd.ThemeCommand)
 
-	// register users
+	// register process
 	CmdHandler.Register("register", cmd.RegisterCommand)
+	CmdHandler.Register("unregister", cmd.DeleteCommand)
+	CmdHandler.Register("delete", cmd.DeleteCommand)
+	CmdHandler.Register("remove", cmd.DeleteCommand)
 
 	// generating widget links
 	CmdHandler.Register("widget", cmd.WidgetCommand)
