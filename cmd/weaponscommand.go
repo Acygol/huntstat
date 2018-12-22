@@ -1,8 +1,10 @@
 package cmd
 
 import (
+	"fmt"
 	"github.com/acygol/huntstat/framework"
 	"math/rand"
+	"strings"
 	"time"
 )
 
@@ -28,27 +30,32 @@ func WeaponsCommand(ctx framework.Context) {
 		{ "12 GA Pump Action Shotgun", PRIMARY }, { "16GA/9.3x74R Drilling", PRIMARY }, { ".22 Pistol Grasshopper", SIDEARM }, { ".45 Long Colt Revolver", SIDEARM },
 		{ ".308 Handgun", SIDEARM }, { ".50 Inline Muzzleloader", PRIMARY }, { "Compound Bow 'Snakebite'", PRIMARY }, { "Crossbow tenpoint", PRIMARY },
 	}
+	var reply strings.Builder
+
 	index := generateRandomFromSlice(weapons, PRIMARY)
-	ctx.Reply("Primary: " + weapons[index].Name)
+	fmt.Fprintf(&reply, "Primary: %s\n", weapons[index].Name)
 	removeIndex(weapons, index)
 
 	// To make sure the first weapon isn't chosen again, I remove it from the slice
 	index = generateRandomFromSlice(weapons, PRIMARY)
-	ctx.Reply("Secondary: " + weapons[index].Name)
+	fmt.Fprintf(&reply, "Secondary: %s\n", weapons[index].Name)
 	removeIndex(weapons, index)
 
 	index = generateRandomFromSlice(weapons, SIDEARM)
-	ctx.Reply("Sidearm (optional): " + weapons[index].Name)
+	fmt.Fprintf(&reply, "Sidearm (optional): %s\n", weapons[index].Name)
 	removeIndex(weapons, index)
+
+	ctx.Reply(reply.String())
 }
 
-// Takes as input an array of strings and returns from it a random index
-// if 'remove' is true, it will also remove the generated item from the input array
+//
+// Takes as input an array of Weapons and returns from it a random index of the requested
+// category
 func generateRandomFromSlice(input []framework.Weapon, weaptype framework.WeaponCategory) int {
 	rand.Seed(time.Now().UnixNano())
 
 	//
-	// the for header does all that it is intended to do. It keeps
+	// the for header does all that it is intended to be done. It keeps
 	// looping while the randomly generated element is not of the right type
 	index := 0
 	for index = rand.Intn(len(input)); input[index].Category != weaptype; index = rand.Intn(len(input)) {

@@ -13,6 +13,7 @@ func WidgetCommand(ctx framework.Context) {
 	}
 	// result value is stored in this variable
 	var huntername string
+	var reply strings.Builder
 
 	// retrieve this user's widget
 	if strings.HasPrefix(ctx.Args[0], "<@") {
@@ -22,8 +23,8 @@ func WidgetCommand(ctx framework.Context) {
 			fmt.Println("error retrieving from database,", err)
 			return
 		}
-		ctx.Reply("Widget for " + ctx.Args[0])
-		ctx.Reply("http://widget.thehunter.com/signature/?user=" + huntername)
+		fmt.Fprintf(&reply, "Widget for %s\n", ctx.Args[0])
+		fmt.Fprintf(&reply, "http://widget.thehunter.com/signature/?user=%s\n", huntername)
 	}
 
 	// go through all users to retrieve their hunter name
@@ -41,7 +42,8 @@ func WidgetCommand(ctx framework.Context) {
 				fmt.Println("Error attempting to scan the next row,", err)
 				break
 			}
-			ctx.Reply("http://widget.thehunter.com/signature/?user=" + huntername)
+			fmt.Fprintf(&reply, "http://widget.thehunter.com/signature/?user=%s\n", huntername)
 		}
 	}
+	ctx.Reply(reply.String())
 }
