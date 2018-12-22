@@ -1,42 +1,33 @@
 package main
 
 import (
-	"database/sql"
-	"github.com/bwmarrin/discordgo"
 	"fmt"
 	"github.com/acygol/huntstat/cmd"
 	"github.com/acygol/huntstat/framework"
+	"github.com/bwmarrin/discordgo"
 	"os"
 	"os/signal"
 	"strings"
 	"syscall"
 )
 
-//
-// These are eventually read through a config.json file
 var (
 	config 		*framework.Config
 	CmdHandler 	*framework.CommandHandler
-	DbHandler	*sql.DB
 	botId		string
 )
 
 func main() {
 	// load config
-	config = framework.LoadConfig("config.json")
+	config = framework.Init("../config.json")
+	if config == nil {
+		fmt.Println("error initializing config")
+		return
+	}
 
 	// establish a command handler
 	CmdHandler = framework.NewCommandHandler()
 	registerCommands()
-
-	// prepare database connection
-	/*
-	DbHandler, err := framework.OpenDatabase()
-	if err != nil {
-		fmt.Println("error preparing database connection,", err)
-		return
-	}
-	*/
 
 	// establish discord session
 	disc, err := discordgo.New("Bot " + config.Token)
@@ -132,6 +123,9 @@ func registerCommands() {
 	//CmdHandler.Register("info", cmd.InfoCommand)
 	//CmdHandler.Register("help", cmd.InfoCommand)
 
+	/*
+		generate random hunt conditions
+	*/
 	CmdHandler.Register("reserves", cmd.ReservesCommand)
 	CmdHandler.Register("reserve", cmd.ReservesCommand)
 	CmdHandler.Register("maps", cmd.ReservesCommand)
@@ -151,7 +145,9 @@ func registerCommands() {
 	CmdHandler.Register("themes", cmd.ThemeCommand)
 	CmdHandler.Register("theme", cmd.ThemeCommand)
 
+	// register users
 	CmdHandler.Register("register", cmd.RegisterCommand)
 
-	//CmdHandler.Register("widget", cmd.WidgetCommand)
+	// generating widget links
+	CmdHandler.Register("widget", cmd.WidgetCommand)
 }

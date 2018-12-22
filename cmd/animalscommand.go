@@ -21,6 +21,5 @@ func AnimalsCommand(ctx framework.Context) {
 		"Snowshoe Hare", "Turkey", "Water Buffalo", "Whitetail Deer",
 		"Wild Boar",
 	}
-
 	ctx.Reply(animals[rand.Intn(len(animals))])
 }
