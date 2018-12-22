@@ -8,7 +8,7 @@ import (
 
 func ThemeCommand(ctx framework.Context) {
 	rand.Seed(time.Now().UnixNano())
-	animals := []string {
+	themes := []string {
 		"What's up, Doc! Any Doc Monsignor/English suit,16GA or 12GA side by Side and .270",
 		"Free to Play Experience: Only standard Clothes, .243 rifle and Single Shotgun, Basic Bino and Bleat Caller",
 		"Sniper Elite: Any Ghillie suit, atleast one rifle with full scope (x12/Long Range) No Kills below 100m",
@@ -20,5 +20,5 @@ func ThemeCommand(ctx framework.Context) {
 		"All-In! No restrictions",
 		"Hunt the one! Hunt only one species of Animal*",
 	}
-	ctx.Reply(animals[rand.Intn(len(animals))])
+	ctx.Reply(themes[rand.Intn(len(themes))])
 }
