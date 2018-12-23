@@ -153,4 +153,7 @@ func registerCommands() {
 
 	// generating widget links
 	CmdHandler.Register("widget", cmd.WidgetCommand)
+
+	// leaderboard
+	CmdHandler.Register("leaderboard", cmd.LeaderboardCommand)
 }

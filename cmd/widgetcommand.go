@@ -30,7 +30,7 @@ func WidgetCommand(ctx framework.Context) {
 			return
 		}
 		fmt.Fprintf(&reply, "Widget for %s\n", ctx.Args[0])
-		fmt.Fprintf(&reply, "http://widget.thehunter.com/signature/?user=%s\n", huntername)
+		fmt.Fprintf(&reply, GetWidget(huntername))
 	} else if strings.EqualFold(ctx.Args[0], "all") {
 		rows, err := ctx.Conf.DbHandle.Query("SELECT hunter_name FROM users WHERE guild_id = ?", ctx.Guild.ID)
 		if err != nil {
@@ -45,10 +45,16 @@ func WidgetCommand(ctx framework.Context) {
 				fmt.Println("Error attempting to scan the next row,", err)
 				break
 			}
-			fmt.Fprintf(&reply, "http://widget.thehunter.com/signature/?user=%s\n", huntername)
+			fmt.Fprintf(&reply, GetWidget(huntername))
 		}
 	} else {
 		fmt.Fprintln(&reply, "Invalid user")
 	}
 	ctx.Reply(reply.String())
+}
+
+func GetWidget(huntername string) string {
+	var url strings.Builder
+	fmt.Fprintf(&url, "http://widget.thehunter.com/signature/?user=%s", huntername)
+	return url.String()
 }
