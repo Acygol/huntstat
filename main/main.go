@@ -120,8 +120,8 @@ func commandHandler(sess *discordgo.Session, msg *discordgo.MessageCreate) {
 }
 
 func registerCommands() {
-	//CmdHandler.Register("info", cmd.InfoCommand)
-	//CmdHandler.Register("help", cmd.InfoCommand)
+	CmdHandler.Register("info", cmd.InfoCommand)
+	CmdHandler.Register("help", cmd.InfoCommand)
 
 	/*
 		generate random hunt conditions
