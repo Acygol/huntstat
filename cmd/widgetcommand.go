@@ -19,7 +19,7 @@ func WidgetCommand(ctx framework.Context) {
 
 	if framework.IsDiscordMention(ctx.Args[0]) {
 		// Mentions that start with '<@' are valid server members
-		err := ctx.Conf.DbHandle.QueryRow("SELECT hunter_name FROM users WHERE discord_name = ? AND guild_id = ?", ctx.Args[0], ctx.Guild.ID).Scan(&huntername)
+		err := ctx.Conf.Database.Handle.QueryRow("SELECT hunter_name FROM users WHERE discord_id = ? AND guild_id = ?", ctx.Args[0], ctx.Guild.ID).Scan(&huntername)
 		if err != nil {
 			if err == sql.ErrNoRows {
 				ctx.Reply("User isn't registered")
@@ -32,7 +32,7 @@ func WidgetCommand(ctx framework.Context) {
 		fmt.Fprintf(&reply, "Widget for %s\n", ctx.Args[0])
 		fmt.Fprintf(&reply, GetWidget(huntername))
 	} else if strings.EqualFold(ctx.Args[0], "all") {
-		rows, err := ctx.Conf.DbHandle.Query("SELECT hunter_name FROM users WHERE guild_id = ?", ctx.Guild.ID)
+		rows, err := ctx.Conf.Database.Handle.Query("SELECT hunter_name FROM users WHERE guild_id = ?", ctx.Guild.ID)
 		if err != nil {
 			ctx.Reply("Unable to retrieve from database, contact the maintainer of this bot for more information")
 			fmt.Println("error retrieving from database,", err)

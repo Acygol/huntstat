@@ -18,9 +18,9 @@ func DeleteCommand(ctx framework.Context) {
 
 	var err error
 	if framework.IsDiscordMention(ctx.Args[0]) {
-		_, err = ctx.Conf.DbHandle.Exec("DELETE FROM users WHERE discord_name = ? AND guild_id = ?", ctx.Args[0], ctx.Guild.ID)
+		_, err = ctx.Conf.Database.Handle.Exec("DELETE FROM users WHERE discord_id = ? AND guild_id = ?", ctx.Args[0], ctx.Guild.ID)
 	} else {
-		_, err = ctx.Conf.DbHandle.Exec("DELETE FROM users WHERE hunter_name = ? AND guild_id = ?", ctx.Args[0], ctx.Guild.ID)
+		_, err = ctx.Conf.Database.Handle.Exec("DELETE FROM users WHERE hunter_name = ? AND guild_id = ?", ctx.Args[0], ctx.Guild.ID)
 	}
 
 	if err != nil {

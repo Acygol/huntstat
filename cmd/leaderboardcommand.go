@@ -10,28 +10,10 @@ import (
 	"strings"
 )
 
-type Record struct {
-	animal		string
-	holder		string
-	score		float64
-	scoresheet	string
-}
-
-func NewRecord(animal string) *Record {
-	rec := new(Record)
-	rec.animal = animal
-	rec.holder = "<nobody>"
-	rec.score = 0.0
-	rec.scoresheet = "0"
-	return rec
-}
-
-// slice of Records for each animal
-var records [len(ANIMALS)]*Record
-
 func LeaderboardCommand(ctx framework.Context) {
+	var records [len(ANIMALS)]*framework.Record
 	for i := 0; i < len(records); i++ {
-		records[i] = NewRecord(ANIMALS[i])
+		records[i] = framework.NewRecord(ANIMALS[i])
 	}
 
 	/*
@@ -54,7 +36,7 @@ func LeaderboardCommand(ctx framework.Context) {
 	// this version, the HTML of a user is scraped exactly once per user. While
 	// in the latter version, the HTML is scraped 'len(ANIMALS)' amount of times
 	*/
-	rows, err := ctx.Conf.DbHandle.Query("SELECT hunter_name FROM users WHERE guild_id = ?", ctx.Guild.ID)
+	rows, err := ctx.Conf.Database.Handle.Query("SELECT hunter_name FROM users WHERE guild_id = ?", ctx.Guild.ID)
 	if err != nil {
 		ctx.Reply("Unable to retrieve from database, contact the maintainer of this bot for more information")
 		fmt.Println("error retrieving from database,", err)
@@ -101,10 +83,10 @@ func LeaderboardCommand(ctx framework.Context) {
 
 		for i := 0; i < len(result); i++ {
 			score, _ := strconv.ParseFloat(result[i]["score"], 64)
-			if score > records[i].score {
-				records[i].score = score
-				records[i].holder = huntername
-				records[i].scoresheet = result[i]["scoresheet"]
+			if score > records[i].Score {
+				records[i].Score = score
+				records[i].Holder = huntername
+				records[i].Scoresheet = result[i]["scoresheet"]
 			}
 		}
 	}
@@ -118,15 +100,15 @@ func LeaderboardCommand(ctx framework.Context) {
 			ctx.Reply("Invalid animal name")
 			return
 		}
-		idx := getAnimalRecordIndex(animal)
-		fmt.Fprintf(&reply, "\n\n%s (%s):\n%+v [<https://www.thehunter.com/#profile/%s/score/%s>]", records[idx].animal, records[idx].holder, records[idx].score, records[idx].holder, records[idx].scoresheet)
+		idx := getAnimalRecordIndex(records[:], animal)
+		fmt.Fprintf(&reply, "\n\n%s (%s):\n%+v [<https://www.thehunter.com/#profile/%s/score/%s>]", records[idx].Animal, records[idx].Holder, records[idx].Score, records[idx].Holder, records[idx].Scoresheet)
 	} else {
 		for i, record := range records {
 			if i % 15 == 0 && i != 0 {
 				ctx.Reply(reply.String())
 				reply.Reset()
 			}
-			fmt.Fprintf(&reply, "\n\n%s (%s):\n%+v [<https://www.thehunter.com/#profile/%s/score/%s>]", record.animal, record.holder, record.score, record.holder, record.scoresheet)
+			fmt.Fprintf(&reply, "\n\n%s (%s):\n%+v [<https://www.thehunter.com/#profile/%s/score/%s>]", record.Animal, record.Holder, record.Score, record.Holder, record.Scoresheet)
 		}
 	}
 	ctx.Reply(reply.String())
@@ -141,9 +123,9 @@ func isValidAnimalName(name string) bool {
 	return false
 }
 
-func getAnimalRecordIndex(name string) int {
+func getAnimalRecordIndex(records []*framework.Record, name string) int {
 	for i, record := range records {
-		if strings.EqualFold(record.animal, name) {
+		if strings.EqualFold(record.Animal, name) {
 			return i
 		}
 	}

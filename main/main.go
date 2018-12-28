@@ -19,7 +19,7 @@ var (
 
 func main() {
 	// load config
-	config = framework.Init("../config.json")
+	config = framework.NewConfig(`..\config\config.json`)
 	if config == nil {
 		fmt.Println("error initializing config")
 		return
