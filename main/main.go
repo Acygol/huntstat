@@ -9,6 +9,7 @@ import (
 	"os/signal"
 	"strings"
 	"syscall"
+    "path/filepath"
 )
 
 var (
@@ -19,7 +20,7 @@ var (
 
 func main() {
 	// load config
-	config = framework.NewConfig(`..\config\config.json`)
+	config = framework.NewConfig(filepath.FromSlash("config/config.json"))
 	if config == nil {
 		fmt.Println("error initializing config")
 		return
@@ -78,6 +79,7 @@ func commandHandler(sess *discordgo.Session, msg *discordgo.MessageCreate) {
 	}
 	content := msg.Content
 
+    // the message doesn't start with the bot's prefix
 	if !strings.HasPrefix(content, config.Prefix) {
 		return
 	}
@@ -87,7 +89,7 @@ func commandHandler(sess *discordgo.Session, msg *discordgo.MessageCreate) {
 		return
 	}
 
-	// content without prefix
+	// remove the prefix from the message's content
 	content = content[len(config.Prefix):]
 	if len(content) < 1 {
 		return
@@ -124,36 +126,43 @@ func registerCommands() {
 	CmdHandler.Register("help", cmd.InfoCommand)
 
 	/*
-		generate random hunt conditions
+	// generate random hunt conditions
 	*/
+    CmdHandler.Register("reserve", cmd.ReservesCommand)
 	CmdHandler.Register("reserves", cmd.ReservesCommand)
-	CmdHandler.Register("reserve", cmd.ReservesCommand)
-	CmdHandler.Register("maps", cmd.ReservesCommand)
 	CmdHandler.Register("map", cmd.ReservesCommand)
+    CmdHandler.Register("maps", cmd.ReservesCommand)
 
+    CmdHandler.Register("weapon", cmd.WeaponsCommand)
 	CmdHandler.Register("weapons", cmd.WeaponsCommand)
-	CmdHandler.Register("weapon", cmd.WeaponsCommand)
 	CmdHandler.Register("gun", cmd.WeaponsCommand)
 	CmdHandler.Register("guns", cmd.WeaponsCommand)
 
+    CmdHandler.Register("animal", cmd.AnimalsCommand)
 	CmdHandler.Register("animals", cmd.AnimalsCommand)
-	CmdHandler.Register("animal", cmd.AnimalsCommand)
 
 	CmdHandler.Register("modifier", cmd.ModifierCommand)
 	CmdHandler.Register("modifiers", cmd.ModifierCommand)
 
-	CmdHandler.Register("themes", cmd.ThemeCommand)
 	CmdHandler.Register("theme", cmd.ThemeCommand)
+    CmdHandler.Register("themes", cmd.ThemeCommand)
 
+    /*
 	// register process
+    */
 	CmdHandler.Register("register", cmd.RegisterCommand)
 	CmdHandler.Register("unregister", cmd.DeleteCommand)
 	CmdHandler.Register("delete", cmd.DeleteCommand)
 	CmdHandler.Register("remove", cmd.DeleteCommand)
 
+    /*
 	// generating widget links
+    */
 	CmdHandler.Register("widget", cmd.WidgetCommand)
 
+    /*
 	// leaderboard
+    */
 	CmdHandler.Register("leaderboard", cmd.LeaderboardCommand)
+    CmdHandler.Register("leaderboards", cmd.LeaderboardCommand)
 }

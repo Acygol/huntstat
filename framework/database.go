@@ -6,6 +6,7 @@ import (
 	"fmt"
 	_ "github.com/go-sql-driver/mysql"
 	"io/ioutil"
+	"path/filepath"
 )
 
 /*
@@ -29,8 +30,12 @@ type Database struct {
 	Handle 		*sql.DB
 }
 
+/*
+// NewDatabase loads credential information from config/database.json,
+// and opens a database connection through TCP
+*/
 func NewDatabase() *Database {
-	config, err := loadDbConfig(`..\config\database.json`)
+	config, err := loadDbConfig(filepath.FromSlash("config/database.json"))
 	if err != nil {
 		fmt.Println("NewDatabase() loading the config file failed:", err)
 		return nil
@@ -54,6 +59,10 @@ func NewDatabase() *Database {
 	return database
 }
 
+/*
+// Close acts as a wrapper method for
+// sql.Close()
+*/
 func (db *Database) Close() (err error) {
 	if db.Handle == nil {
 		return
