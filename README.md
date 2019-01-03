@@ -1,4 +1,4 @@
-Note: command names that contain `(s)` indicate that they can be executed by their plural form, 
+Note: command names that contain `(s)` indicate that they can also be executed using their plural form. 
 e.g., `s!weapon` yields the same result as `s!weapons`
 
 # Purpose
@@ -13,17 +13,15 @@ HuntStat is a bot aimed to automate theHunter communities by:
     1. `s!theme`
 4. generating a random game modifier:
     1. `s!modifier(s)`
+5. generating a hunter's widget page URL:
+    1. `s!widget <@discord_name>`
+6. generating a leaderboard for your community:
+    1. `s!leaderboard(s)`
+    2. `s!leaderboard(s) <@discord_name>`
+    3. `s!leaderboard(s) <animal_name>`
 
-A limitation to the bot is that it requires you to register your members:  
-- `s!register <@discord_name> <theHunter_name>`
+For commands such as `s!widget` and `s!leaderboard(s)`, you must register your community members to the bot:
+1. `s!register <@discord_name> <thehunter_name>`
 
 If a mistake was made or a user has left your community, you can unregister them:
-- `s!unregister <@discord_name | theHunter_name>`
-
-## WIP 
-Once registered, the bot can generate some useful statistics about your community:
-1. a hunter's widget: 
-    1. `s!widget <@discord_name>`
-2. a leaderboard of all your members: 
-    1. `s!leaderboard(s)`
-    
+1. `s!unregister <@discord_name | thehunter_name>` 
