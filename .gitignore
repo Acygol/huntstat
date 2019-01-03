@@ -3,3 +3,10 @@
 
 # config files
 *.json
+
+# Showcase GIFs
+*.gif
+
+# Compiled executables
+*.exe
+main
