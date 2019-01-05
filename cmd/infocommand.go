@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"bytes"
+
 	"github.com/acygol/huntstat/framework"
 )
 
@@ -16,5 +17,5 @@ func InfoCommand(ctx framework.Context) {
 		buffer.WriteString(", ")
 	}
 	str := buffer.String()
-	ctx.Reply(str[:len(str) - 2])
+	ctx.Reply(str[:len(str)-2])
 }

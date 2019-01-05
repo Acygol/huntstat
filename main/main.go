@@ -26,9 +26,14 @@ func main() {
 		fmt.Println("error loading animal data,", err)
 		return
 	}
-	err = framework.LoadWeapons()
-	if err != nil {
+
+	if err = framework.LoadWeapons(); err != nil {
 		fmt.Println("error loading weapon data,", err)
+		return
+	}
+
+	if err = framework.LoadReserves(); err != nil {
+		fmt.Println("error loading reserve data,", err)
 		return
 	}
 
