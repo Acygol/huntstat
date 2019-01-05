@@ -2,7 +2,7 @@
 \.idea
 
 # config files
-*.json
+config/
 
 # Showcase GIFs
 *.gif
