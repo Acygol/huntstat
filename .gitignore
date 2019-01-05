@@ -4,8 +4,9 @@
 # config files
 config/
 
-# Showcase GIFs
+# irrelevant pictures and gifs
 *.gif
+Doc.jpg
 
 # Compiled executables
 *.exe
