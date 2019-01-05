@@ -2,87 +2,142 @@ package cmd
 
 import (
 	"fmt"
-	"github.com/acygol/huntstat/framework"
 	"io/ioutil"
 	"net/http"
 	"regexp"
 	"strconv"
 	"strings"
+
+	"github.com/acygol/huntstat/framework"
 )
 
+//
+// LeaderboardCommand is executed when someone
+// calls 's!leaderboard(s)'
+//
 func LeaderboardCommand(ctx framework.Context) {
-	var records [len(ANIMALS)]*framework.Record
-	for i := 0; i < len(records); i++ {
-		records[i] = framework.NewRecord(ANIMALS[i])
+	//
+	// Each index in records has a corresponding animal
+	// and thus initialization is necessary to establish
+	// this relationship
+	//
+	var records []*framework.Record
+	for i := 0; i < len(framework.Animals); i++ {
+		records = append(records, framework.NewRecord(framework.Animals[i]))
 	}
 
-	/*
-	// matches:
-	// 		<!-- 1654.51 11 65487546 -->
-	// which are the comments in the widget's HTML code describing the animal field:
-	// 		1. floating point number indicating the animal's score
-	//		2. integer indicating the # of this animal the user has harvested
-	//		3. integer indicating the scoresheet id used in the URL
-	*/
+	//
+	// The widget's HTML page has comments for each animal
+	// tile with the following format:
+	//		<!-- 1654.51 11 65487546 -->
+	// Where
+	//		1654.51 	is the animal's score
+	//		11 			is the amount of this animal the user has harvested
+	//		65487546	is the scoresheet id used in the scoresheet's URL
+	// Extracting these comments from the HTML code is done
+	// with a regular expression, which is used further
+	// down the code but is compiled here:
+	//
 	regex := regexp.MustCompile(`(<!--.(?P<score>[0-9.]+).(?P<harvested>[0-9]+).(?P<scoresheet>[0-9]+).-->)`)
 
-	/*
-	// Go through all users and for each, register each animal's score
-	// if one of the scores beats the record, then the Record holder's name
-	// is adjusted.
 	//
-	// The reason why this algorithm doesn't go through all animals and for each
-	// go through the user's widget is because the HTML is scraped too often. In
-	// this version, the HTML of a user is scraped exactly once per user. While
-	// in the latter version, the HTML is scraped 'len(ANIMALS)' amount of times
-	*/
+	// Query the database to retrieve the hunter names of
+	// all registered community members within the server
+	// in which the command was executed
+	//
 	rows, err := ctx.Conf.Database.Handle.Query("SELECT hunter_name FROM users WHERE guild_id = ?", ctx.Guild.ID)
 	if err != nil {
-		ctx.Reply("Unable to retrieve from database, contact the maintainer of this bot for more information")
-		fmt.Println("error retrieving from database,", err)
+		ctx.Reply("Unable to retrieve from database, contact the maintainer of this bot for more information.")
+		fmt.Println("erro retrieving from database,", err)
 		return
 	}
 	defer rows.Close()
+
+	//
+	// For each member in the community, process their widget
+	// and compare each score against that of its corresponding
+	// record. The HTML is scraped exactly $x$ amount of times
+	// where $x$ is the amount of members the community has.
+	// Doing it the other way around: "for each animal, process
+	// widgets of all community members" results in the widget
+	// being scraped more than it should; $x * len(ANIMALS)$
+	// times as opposed to just $x$ times.
+	//
 	for huntername := ""; rows.Next(); {
 		err := rows.Scan(&huntername)
 		if err != nil {
-			fmt.Println("Error attempting to scan the next row,", err)
+			fmt.Println("error while scanning the next row,", err)
 			break
 		}
 
-		/*
-		// Load HTML
-		*/
+		//
+		// Get the widget's page, read its HTML
+		// and then stringify it such that it becomes
+		// easier to use in finding all regex matches
+		//
 		resp, _ := http.Get(GetWidget(huntername))
-		bdy, _ := ioutil.ReadAll(resp.Body)
-		body := string(bdy) // stringify body
+		retbody, _ := ioutil.ReadAll(resp.Body)
+		body := string(retbody)
 
-		/*
-		// Allows submatches to be referenced with their name
-		// as defined in the regexp:
-		//		(?P<score>...)
-		// e.g.,
+		//
+		// The regex used to extract necessary data from
+		// the HTML page is composed of 3 named groups:
+		//		(?P<score>), (?P<harvested>) and (?P<scoresheet>)
+		// The following extracts said groups and puts
+		// them in an associative array (= map) so that it
+		// becomes easier to call upon specific submatches:
 		//		result["score"]
-		// yields the score part of a match
-		*/
-		match := regex.FindAllString(body, -1)
-		result := make([]map[string]string, len(ANIMALS), len(ANIMALS)+1)
-		j := 0
+		// yields the submatch related to the animal score,
+		// as defined by the regular expression used
+		//
+		matches := regex.FindAllString(body, -1)
 
-		for _, comment := range match {
-			submatch := regex.FindStringSubmatch(comment)
+		//
+		// result is a slice of maps. Each index in the slice
+		// is an associative array for the submatches of each
+		// animal in the widget.
+		//		result[0]["score"]
+		// yields the score of the first animal tile, etc.
+		//
+		result := make([]map[string]string, len(framework.Animals))
+
+		//
+		//
+		//
+		j := 0
+		for _, match := range matches {
+			submatch := regex.FindStringSubmatch(match)
+
+			//
+			// result is already initializes as a slice
+			// of maps, but the maps themselves are not
+			// initialized as of yet
+			//
 			tmpmap := make(map[string]string)
-			for i, subname := range regex.SubexpNames() {
-				if i != 0 && subname != "" {
-					tmpmap[subname] = submatch[i]
+			for i, submatchname := range regex.SubexpNames() {
+				if i != 0 && submatchname != "" {
+					tmpmap[submatchname] = submatch[i]
 				}
 			}
 			result[j] = tmpmap
 			j++
 		}
 
-		for i := 0; i < len(result); i++ {
+		for i := range result {
+
+			//
+			// The score part of a record is stored as an float
+			// (because it is a float), but since the score
+			// from the HTML comment is extracted as a string,
+			// the conversion is neccesary
+			//
 			score, _ := strconv.ParseFloat(result[i]["score"], 64)
+
+			//
+			// The record must only be updated when the
+			// recently retrieved score exceeds that of
+			// the current record
+			//
 			if score > records[i].Score {
 				records[i].Score = score
 				records[i].Holder = huntername
@@ -91,43 +146,62 @@ func LeaderboardCommand(ctx framework.Context) {
 		}
 	}
 
+	//
+	// All members are processed and all records have been
+	// populated with data
+	//
 	var reply strings.Builder
+
+	//
+	// ctx.Args for 's!leaderboard(s)' is not 0 when
+	// an animal name has been passed along with the
+	// command call. In that case, it's sufficient
+	// to only show that animal's record. The core
+	// logic of this command remains the same
+	//
 	if len(ctx.Args) > 0 {
-		// a specific animal was given
+		//
+		// Some animal names have spaces in them:
+		//		"Alpine Ibex"
+		// However, the command processor uses the
+		// space character as an argument delimiter:
+		//		ctx.Args[0] = "Alpine"
+		//		ctx.Args[1] = "Ibex"
+		// In this case, the delimiter can be ignored
+		// and all arguments joined together equals
+		// the animal name
+		//
 		animal := strings.Join(ctx.Args, " ")
 
-		if !isValidAnimalName(animal) {
+		if !framework.IsValidAnimalName(animal) {
 			ctx.Reply("Invalid animal name")
 			return
 		}
-		idx := getAnimalRecordIndex(records[:], animal)
-		fmt.Fprintf(&reply, "\n\n%s (%s):\n%+v [<https://www.thehunter.com/#profile/%s/score/%s>]", records[idx].Animal, records[idx].Holder, records[idx].Score, records[idx].Holder, records[idx].Scoresheet)
+
+		//
+		// I can assume that idx is never going to be -1
+		// in this case, because if it ever could, the above
+		// if statement would fail before this is ever called
+		//
+		idx := framework.GetRecordIndexByAnimal(records, animal)
+		rec := records[idx]
+		fmt.Fprintf(&reply, "%s (%s):\n%+v [<https://www.thehunter.com/#profile/%s/score/%s>]", rec.Animal, rec.Holder, rec.Score, rec.Holder, rec.Scoresheet)
 	} else {
-		for i, record := range records {
-			if i % 15 == 0 && i != 0 {
+		for i, rec := range records {
+			//
+			// Sending each record as a separate message results in the
+			// last ones being sent with an enormous delay for causes
+			// unknown to me. To prevent this, I gather them into a
+			// single strings.Builder and send them all together at once.
+			// However, Discord only allows messages up to 2'000 characters
+			// and so, I must divide them further up into smaller chunks
+			//
+			if i%15 == 0 && i != 0 {
 				ctx.Reply(reply.String())
 				reply.Reset()
 			}
-			fmt.Fprintf(&reply, "\n\n%s (%s):\n%+v [<https://www.thehunter.com/#profile/%s/score/%s>]", record.Animal, record.Holder, record.Score, record.Holder, record.Scoresheet)
+			fmt.Fprintf(&reply, "\n\n%s (%s):\n%+v [<https://www.thehunter.com/#profile/%s/score/%s>]", rec.Animal, rec.Holder, rec.Score, rec.Holder, rec.Scoresheet)
 		}
 	}
 	ctx.Reply(reply.String())
-}
-
-func isValidAnimalName(name string) bool {
-	for _, n := range ANIMALS {
-		if strings.EqualFold(name, n) {
-			return true
-		}
-	}
-	return false
-}
-
-func getAnimalRecordIndex(records []*framework.Record, name string) int {
-	for i, record := range records {
-		if strings.EqualFold(record.Animal, name) {
-			return i
-		}
-	}
-	return -1
 }
