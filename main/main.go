@@ -2,23 +2,36 @@ package main
 
 import (
 	"fmt"
+	"os"
+	"os/signal"
+	"path/filepath"
+	"strings"
+	"syscall"
+
 	"github.com/acygol/huntstat/cmd"
 	"github.com/acygol/huntstat/framework"
 	"github.com/bwmarrin/discordgo"
-	"os"
-	"os/signal"
-	"strings"
-	"syscall"
-    "path/filepath"
 )
 
 var (
-	config 		*framework.Config
-	CmdHandler 	*framework.CommandHandler
-	botId		string
+	config     *framework.Config
+	CmdHandler *framework.CommandHandler
+	botId      string
 )
 
 func main() {
+	// load theHunter data
+	err := framework.LoadAnimals()
+	if err != nil {
+		fmt.Println("error loading animal data,", err)
+		return
+	}
+	err = framework.LoadWeapons()
+	if err != nil {
+		fmt.Println("error loading weapon data,", err)
+		return
+	}
+
 	// load config
 	config = framework.NewConfig(filepath.FromSlash("config/config.json"))
 	if config == nil {
@@ -79,7 +92,7 @@ func commandHandler(sess *discordgo.Session, msg *discordgo.MessageCreate) {
 	}
 	content := msg.Content
 
-    // the message doesn't start with the bot's prefix
+	// the message doesn't start with the bot's prefix
 	if !strings.HasPrefix(content, config.Prefix) {
 		return
 	}
@@ -126,43 +139,43 @@ func registerCommands() {
 	CmdHandler.Register("help", cmd.InfoCommand)
 
 	/*
-	// generate random hunt conditions
+		// generate random hunt conditions
 	*/
-    CmdHandler.Register("reserve", cmd.ReservesCommand)
+	CmdHandler.Register("reserve", cmd.ReservesCommand)
 	CmdHandler.Register("reserves", cmd.ReservesCommand)
 	CmdHandler.Register("map", cmd.ReservesCommand)
-    CmdHandler.Register("maps", cmd.ReservesCommand)
+	CmdHandler.Register("maps", cmd.ReservesCommand)
 
-    CmdHandler.Register("weapon", cmd.WeaponsCommand)
+	CmdHandler.Register("weapon", cmd.WeaponsCommand)
 	CmdHandler.Register("weapons", cmd.WeaponsCommand)
 	CmdHandler.Register("gun", cmd.WeaponsCommand)
 	CmdHandler.Register("guns", cmd.WeaponsCommand)
 
-    CmdHandler.Register("animal", cmd.AnimalsCommand)
+	CmdHandler.Register("animal", cmd.AnimalsCommand)
 	CmdHandler.Register("animals", cmd.AnimalsCommand)
 
 	CmdHandler.Register("modifier", cmd.ModifierCommand)
 	CmdHandler.Register("modifiers", cmd.ModifierCommand)
 
 	CmdHandler.Register("theme", cmd.ThemeCommand)
-    CmdHandler.Register("themes", cmd.ThemeCommand)
+	CmdHandler.Register("themes", cmd.ThemeCommand)
 
-    /*
-	// register process
-    */
+	/*
+		// register process
+	*/
 	CmdHandler.Register("register", cmd.RegisterCommand)
 	CmdHandler.Register("unregister", cmd.DeleteCommand)
 	CmdHandler.Register("delete", cmd.DeleteCommand)
 	CmdHandler.Register("remove", cmd.DeleteCommand)
 
-    /*
-	// generating widget links
-    */
+	/*
+		// generating widget links
+	*/
 	CmdHandler.Register("widget", cmd.WidgetCommand)
 
-    /*
-	// leaderboard
-    */
+	/*
+		// leaderboard
+	*/
 	CmdHandler.Register("leaderboard", cmd.LeaderboardCommand)
-    CmdHandler.Register("leaderboards", cmd.LeaderboardCommand)
+	CmdHandler.Register("leaderboards", cmd.LeaderboardCommand)
 }
