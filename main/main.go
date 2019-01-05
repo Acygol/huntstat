@@ -64,7 +64,7 @@ func main() {
 		disc.UpdateStatus(0, "theHunter Classic")
 		fmt.Println("HuntStat is running in", len(discord.State.Guilds), "guilds.")
 	})
-	disc.AddHandler(framework.OnGuildJoined)
+	//disc.AddHandler(framework.OnGuildJoined)
 
 	// Open a websocket connection to Discord
 	err = disc.Open()

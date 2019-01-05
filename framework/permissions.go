@@ -25,45 +25,48 @@ func OnGuildJoined(sess *discordgo.Session, event *discordgo.GuildCreate) {
 		log.Println("error retrieving guild roles,", err)
 		return
 	}
-
-	exists := doesRoleExist(guildRoles, "user")
-	if !exists {
-		log.Printf("role 'user' doesn't exist in guild (%s)", event.Guild.Name)
-
-		// create user role
-		/*
-			role, err := createRole(sess, event.Guild, "user", true)
-			if err != nil {
-				log.Println("error creating role 'user',", err)
-				return
-			}
-			// give everyone the user role
-			for _, member := range event.Guild.Members {
-				assignRoleToUser(sess, event.Guild, member, role)
-			}
-		*/
+	role, err := validateRole(sess, event.Guild, guildRoles, "user", true)
+	if err != nil {
+		log.Printf("")
+		return
 	}
 
-	if exists = doesRoleExist(guildRoles, "admin"); !exists {
-		log.Printf("role 'admin' doesn't exist in guild (%s)", event.Guild.Name)
-		// create admin role
-		/*
-			_, err := createRole(sess, event.Guild, "admin", false)
-			if err != nil {
-				log.Println("error creating role 'admin',", err)
-				return
-			}
-		*/
+	// give everyone the user role
+	for _, member := range event.Guild.Members {
+		assignRoleToUser(sess, event.Guild, member, role)
 	}
+
+	validateRole(sess, event.Guild, guildRoles, "admin", false)
 }
 
-func doesRoleExist(roles []*discordgo.Role, name string) bool {
-	for _, role := range roles {
+func validateRole(sess *discordgo.Session, guild *discordgo.Guild, roles []*discordgo.Role, name string, hoist bool) (*discordgo.Role, error) {
+	exists := doesRoleExist(guild, name)
+	var role *discordgo.Role
+	var err error
+	if !exists {
+		log.Printf("role '%s' does not exist in guild (%s), creating...", name, guild.Name)
+		role, err = createRole(sess, guild, name, hoist)
+		if err != nil {
+			log.Printf("error creating role,", err)
+			return nil, err
+		}
+	} else {
+		role = roles[getRoleID(guild, name)]
+	}
+	return role, nil
+}
+
+func doesRoleExist(guild *discordgo.Guild, name string) bool {
+	return (getRoleID(guild, name) != -1)
+}
+
+func getRoleID(guild *discordgo.Guild, name string) int {
+	for i, role := range guild.Roles {
 		if role.Name == name {
-			return true
+			return i
 		}
 	}
-	return false
+	return -1
 }
 
 func createRole(sess *discordgo.Session, guild *discordgo.Guild, name string, hoist bool) (*discordgo.Role, error) {
