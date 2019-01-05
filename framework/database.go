@@ -4,36 +4,37 @@ import (
 	"database/sql"
 	"encoding/json"
 	"fmt"
-	_ "github.com/go-sql-driver/mysql"
 	"io/ioutil"
 	"path/filepath"
+
+	_ "github.com/go-sql-driver/mysql"
 )
 
-/*
+//
 // DbConfig is a type that holds JSON-loaded
 // fields that are related to the connection
 // to the database; the credentials
-*/
+//
 type DbConfig struct {
 	// Database fields
-	DbHost		string	`json:"database_host"`
-	DbPort		string	`json:"database_port"`
-	DbUser		string	`json:"database_user"`
-	DbName		string 	`json:"database_name"`
-	DbPass 		string 	`json:"database_pass"`
+	DbHost string `json:"database_host"`
+	DbPort string `json:"database_port"`
+	DbUser string `json:"database_user"`
+	DbName string `json:"database_name"`
+	DbPass string `json:"database_pass"`
 }
 
-/*
+//
 // Database is a wrapper type around sql.DB
-*/
+//
 type Database struct {
-	Handle 		*sql.DB
+	Handle *sql.DB
 }
 
-/*
+//
 // NewDatabase loads credential information from config/database.json,
 // and opens a database connection through TCP
-*/
+//
 func NewDatabase() *Database {
 	config, err := loadDbConfig(filepath.FromSlash("config/database.json"))
 	if err != nil {
@@ -59,10 +60,10 @@ func NewDatabase() *Database {
 	return database
 }
 
-/*
+//
 // Close acts as a wrapper method for
 // sql.Close()
-*/
+//
 func (db *Database) Close() (err error) {
 	if db.Handle == nil {
 		return

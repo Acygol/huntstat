@@ -15,7 +15,7 @@ import (
 var (
 	config     *framework.Config
 	CmdHandler *framework.CommandHandler
-	botId      string
+	botID      string
 )
 
 func main() {
@@ -55,16 +55,16 @@ func main() {
 		fmt.Println("Error obtaining user details,", err)
 		return
 	}
-	botId = usr.ID
+	botID = usr.ID
 
 	// commandHandler is a callback for MessageCreate events
 	// it ought to handle commands
 	disc.AddHandler(commandHandler)
 	disc.AddHandler(func(discord *discordgo.Session, ready *discordgo.Ready) {
 		disc.UpdateStatus(0, "theHunter Classic")
-		guilds := disc.State.Guilds
-		fmt.Println("HuntStat is running in", len(guilds), "guilds.")
+		fmt.Println("HuntStat is running in", len(discord.State.Guilds), "guilds.")
 	})
+	disc.AddHandler(framework.OnGuildJoined)
 
 	// Open a websocket connection to Discord
 	err = disc.Open()
@@ -87,7 +87,7 @@ func commandHandler(sess *discordgo.Session, msg *discordgo.MessageCreate) {
 	user := msg.Author
 
 	// ignore the message when the bot themselves sent it
-	if user.ID == botId || user.Bot {
+	if user.ID == botID || user.Bot {
 		return
 	}
 	content := msg.Content
