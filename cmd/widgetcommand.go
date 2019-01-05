@@ -3,8 +3,9 @@ package cmd
 import (
 	"database/sql"
 	"fmt"
-	"github.com/acygol/huntstat/framework"
 	"strings"
+
+	"github.com/acygol/huntstat/framework"
 )
 
 func WidgetCommand(ctx framework.Context) {

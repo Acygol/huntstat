@@ -2,7 +2,7 @@ package framework
 
 type (
 	Command func(Context)
-	CmdMap map[string]Command
+	CmdMap  map[string]Command
 
 	CommandHandler struct {
 		cmds CmdMap

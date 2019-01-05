@@ -1,14 +1,15 @@
 package cmd
 
 import (
-	"github.com/acygol/huntstat/framework"
 	"math/rand"
 	"time"
+
+	"github.com/acygol/huntstat/framework"
 )
 
 func ThemeCommand(ctx framework.Context) {
 	rand.Seed(time.Now().UnixNano())
-	themes := []string {
+	themes := []string{
 		"What's up, Doc! Any Doc Monsignor/English suit,16GA or 12GA side by Side and .270",
 		"Free to Play Experience: Only standard Clothes, .243 rifle and Single Shotgun, Basic Bino and Bleat Caller",
 		"Sniper Elite: Any Ghillie suit, atleast one rifle with full scope (x12/Long Range) No Kills below 100m",

@@ -2,29 +2,42 @@ package main
 
 import (
 	"fmt"
-	"github.com/acygol/huntstat/cmd"
-	"github.com/acygol/huntstat/framework"
-	"github.com/bwmarrin/discordgo"
 	"os"
 	"os/signal"
 	"strings"
 	"syscall"
-    "path/filepath"
+
+	"github.com/acygol/huntstat/cmd"
+	"github.com/acygol/huntstat/framework"
+	"github.com/bwmarrin/discordgo"
 )
 
 var (
-	config 		*framework.Config
-	CmdHandler 	*framework.CommandHandler
-	botId		string
+	config     *framework.Config
+	CmdHandler *framework.CommandHandler
+	botID      string
 )
 
 func main() {
-	// load config
-	config = framework.NewConfig(filepath.FromSlash("config/config.json"))
-	if config == nil {
-		fmt.Println("error initializing config")
+	// load theHunter data
+	err := framework.LoadAnimals()
+	if err != nil {
+		fmt.Println("error loading animal data,", err)
 		return
 	}
+
+	if err = framework.LoadWeapons(); err != nil {
+		fmt.Println("error loading weapon data,", err)
+		return
+	}
+
+	if err = framework.LoadReserves(); err != nil {
+		fmt.Println("error loading reserve data,", err)
+		return
+	}
+
+	// load config
+	config = framework.NewConfig()
 
 	// establish a command handler
 	CmdHandler = framework.NewCommandHandler()
@@ -42,16 +55,16 @@ func main() {
 		fmt.Println("Error obtaining user details,", err)
 		return
 	}
-	botId = usr.ID
+	botID = usr.ID
 
 	// commandHandler is a callback for MessageCreate events
 	// it ought to handle commands
 	disc.AddHandler(commandHandler)
 	disc.AddHandler(func(discord *discordgo.Session, ready *discordgo.Ready) {
 		disc.UpdateStatus(0, "theHunter Classic")
-		guilds := disc.State.Guilds
-		fmt.Println("HuntStat is running in", len(guilds), "guilds.")
+		fmt.Println("HuntStat is running in", len(discord.State.Guilds), "guilds.")
 	})
+	//disc.AddHandler(framework.OnGuildJoined)
 
 	// Open a websocket connection to Discord
 	err = disc.Open()
@@ -74,12 +87,12 @@ func commandHandler(sess *discordgo.Session, msg *discordgo.MessageCreate) {
 	user := msg.Author
 
 	// ignore the message when the bot themselves sent it
-	if user.ID == botId || user.Bot {
+	if user.ID == botID || user.Bot {
 		return
 	}
 	content := msg.Content
 
-    // the message doesn't start with the bot's prefix
+	// the message doesn't start with the bot's prefix
 	if !strings.HasPrefix(content, config.Prefix) {
 		return
 	}
@@ -126,43 +139,43 @@ func registerCommands() {
 	CmdHandler.Register("help", cmd.InfoCommand)
 
 	/*
-	// generate random hunt conditions
+		// generate random hunt conditions
 	*/
-    CmdHandler.Register("reserve", cmd.ReservesCommand)
+	CmdHandler.Register("reserve", cmd.ReservesCommand)
 	CmdHandler.Register("reserves", cmd.ReservesCommand)
 	CmdHandler.Register("map", cmd.ReservesCommand)
-    CmdHandler.Register("maps", cmd.ReservesCommand)
+	CmdHandler.Register("maps", cmd.ReservesCommand)
 
-    CmdHandler.Register("weapon", cmd.WeaponsCommand)
+	CmdHandler.Register("weapon", cmd.WeaponsCommand)
 	CmdHandler.Register("weapons", cmd.WeaponsCommand)
 	CmdHandler.Register("gun", cmd.WeaponsCommand)
 	CmdHandler.Register("guns", cmd.WeaponsCommand)
 
-    CmdHandler.Register("animal", cmd.AnimalsCommand)
+	CmdHandler.Register("animal", cmd.AnimalsCommand)
 	CmdHandler.Register("animals", cmd.AnimalsCommand)
 
 	CmdHandler.Register("modifier", cmd.ModifierCommand)
 	CmdHandler.Register("modifiers", cmd.ModifierCommand)
 
 	CmdHandler.Register("theme", cmd.ThemeCommand)
-    CmdHandler.Register("themes", cmd.ThemeCommand)
+	CmdHandler.Register("themes", cmd.ThemeCommand)
 
-    /*
-	// register process
-    */
+	/*
+		// register process
+	*/
 	CmdHandler.Register("register", cmd.RegisterCommand)
 	CmdHandler.Register("unregister", cmd.DeleteCommand)
 	CmdHandler.Register("delete", cmd.DeleteCommand)
 	CmdHandler.Register("remove", cmd.DeleteCommand)
 
-    /*
-	// generating widget links
-    */
+	/*
+		// generating widget links
+	*/
 	CmdHandler.Register("widget", cmd.WidgetCommand)
 
-    /*
-	// leaderboard
-    */
+	/*
+		// leaderboard
+	*/
 	CmdHandler.Register("leaderboard", cmd.LeaderboardCommand)
-    CmdHandler.Register("leaderboards", cmd.LeaderboardCommand)
+	CmdHandler.Register("leaderboards", cmd.LeaderboardCommand)
 }

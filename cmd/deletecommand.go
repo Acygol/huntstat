@@ -2,10 +2,17 @@ package cmd
 
 import (
 	"fmt"
+
 	"github.com/acygol/huntstat/framework"
 )
 
 func DeleteCommand(ctx framework.Context) {
+	// retrieve user roles
+	if !framework.IsAdministrator(ctx.Discord, ctx.Guild, ctx.User) {
+		ctx.Reply("You do not have permission to use this command.")
+		return
+	}
+
 	if len(ctx.Args) < 1 {
 		ctx.Reply("Invalid syntax: s!delete <@user>")
 		return
