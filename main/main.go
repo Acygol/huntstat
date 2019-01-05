@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"os"
 	"os/signal"
-	"path/filepath"
 	"strings"
 	"syscall"
 
@@ -38,11 +37,7 @@ func main() {
 	}
 
 	// load config
-	config = framework.NewConfig(filepath.FromSlash("config/config.json"))
-	if config == nil {
-		fmt.Println("error initializing config")
-		return
-	}
+	config = framework.NewConfig()
 
 	// establish a command handler
 	CmdHandler = framework.NewCommandHandler()

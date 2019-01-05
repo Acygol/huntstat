@@ -1,9 +1,6 @@
 package framework
 
 import (
-	"encoding/json"
-	"io/ioutil"
-	"path/filepath"
 	"strings"
 )
 
@@ -15,11 +12,7 @@ var Animals []string
 // returning an error indicating success or failure
 //
 func LoadAnimals() error {
-	body, err := ioutil.ReadFile(filepath.FromSlash("data/animals.json"))
-	if err != nil {
-		return err
-	}
-	err = json.Unmarshal(body, &Animals)
+	err := LoadFromJson("data/animals.json", &Animals)
 	return err
 }
 

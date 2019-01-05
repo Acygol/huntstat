@@ -1,11 +1,5 @@
 package framework
 
-import (
-	"encoding/json"
-	"io/ioutil"
-	"path/filepath"
-)
-
 var Reserves []string
 
 //
@@ -14,10 +8,6 @@ var Reserves []string
 // returning an error indicating success or failure
 //
 func LoadReserves() error {
-	body, err := ioutil.ReadFile(filepath.FromSlash("data/reserves.json"))
-	if err != nil {
-		return err
-	}
-	err = json.Unmarshal(body, &Reserves)
+	err := LoadFromJson("data/reserves.json", &Reserves)
 	return err
 }

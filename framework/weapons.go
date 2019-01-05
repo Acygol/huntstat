@@ -1,12 +1,5 @@
 package framework
 
-import (
-	"encoding/json"
-	"io/ioutil"
-	"log"
-	"path/filepath"
-)
-
 //
 // Enum-like declaration for weapon categories used in the Weapon struct
 type WeaponCategory int
@@ -26,14 +19,6 @@ var Weapons []Weapon
 // returning an error indicating success or failure
 //
 func LoadWeapons() error {
-	body, err := ioutil.ReadFile(filepath.FromSlash("data/weapons.json"))
-	if err != nil {
-		return err
-	}
-	err = json.Unmarshal(body, &Weapons)
-
-	for i, weapon := range Weapons {
-		log.Printf("i: %d\tname: %s\tcategory: %+v\n", i, weapon.Name, weapon.Category)
-	}
+	err := LoadFromJson("data/weapons.json", &Weapons)
 	return err
 }
