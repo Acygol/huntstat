@@ -6,8 +6,12 @@ import (
 	"path/filepath"
 )
 
-func LoadFromJson(fileName string, data interface{}) error {
-	body, err := ioutil.ReadFile(filepath.FromSlash(fileName))
+//
+// LoadFromJSON reads from a JSON file at pathtofile and
+// unmarshals it into 'data'
+//
+func LoadFromJSON(pathtofile string, data interface{}) error {
+	body, err := ioutil.ReadFile(filepath.FromSlash(pathtofile))
 	if err != nil {
 		return err
 	}

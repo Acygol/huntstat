@@ -47,15 +47,15 @@ var (
 // reserves
 //
 func LoadGameData() {
-	err := LoadFromJson("data/weapons.json", &Weapons)
+	err := LoadFromJSON("data/weapons.json", &Weapons)
 	if err != nil {
 		log.Fatal("error loading weapons.json,", err)
 		return
 	}
-	if err = LoadFromJson("data/animals.json", &Animals); err != nil {
+	if err = LoadFromJSON("data/animals.json", &Animals); err != nil {
 		log.Fatal("error loading animals.json,", err)
 	}
-	if err = LoadFromJson("data/reserves.json", &Reserves); err != nil {
+	if err = LoadFromJSON("data/reserves.json", &Reserves); err != nil {
 		log.Fatal("error loading reserves.json,", err)
 	}
 }
@@ -67,13 +67,11 @@ func LoadGameData() {
 // generated, and returns the name of weapon
 //
 func GenerateRandomWeaponOnce(weapons []Weapon, weaptype string) string {
-	log.Println("GenerateRandomWeaponOnce executed")
 	rand.Seed(time.Now().UnixNano())
 
 	index := 0
 	for index = rand.Intn(len(weapons)); !strings.EqualFold(weapons[index].Type, weaptype); index = rand.Intn(len(weapons)) {
 		// empty
-		log.Printf("weapons[index].Type: %s, weaptype: %s, index: %d\n", weapons[index].Type, weaptype, index)
 	}
 
 	// delete the element at [index] from the input slice

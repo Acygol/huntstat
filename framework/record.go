@@ -16,7 +16,7 @@ type Record struct {
 //
 // NewRecord is a constructor-like factory function that
 // initializes an instance of a Record and returns a pointer
-// to the variable
+// to the new instance
 //
 func NewRecord(animal string) *Record {
 	rec := new(Record)
@@ -34,8 +34,9 @@ func NewRecord(animal string) *Record {
 // index when it is found
 //
 func GetRecordIndexByAnimal(records []*Record, animal string) int {
+	loweredName := strings.ToLower(animal)
 	for i, rec := range records {
-		if strings.Contains(strings.ToLower(rec.Animal), strings.ToLower(animal)) {
+		if strings.Contains(strings.ToLower(rec.Animal), loweredName) {
 			return i
 		}
 	}

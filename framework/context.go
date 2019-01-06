@@ -2,10 +2,11 @@ package framework
 
 import (
 	"fmt"
+
 	"github.com/bwmarrin/discordgo"
 )
 
-/*
+//
 // Context is a struct holding all relevant information
 // regarding a discord guild when a command is executed
 // It allows for commands to recognize in which guild
@@ -14,25 +15,25 @@ import (
 // It is passed as a function argument to command
 // functions. Could also be used in non-command
 // calls if needed.
-*/
+//
 type Context struct {
-	Discord			*discordgo.Session
-	Guild			*discordgo.Guild
-	TextChannel 	*discordgo.Channel
-	User			*discordgo.User
-	Message			*discordgo.MessageCreate
-	Args 			[]string
+	Discord     *discordgo.Session
+	Guild       *discordgo.Guild
+	TextChannel *discordgo.Channel
+	User        *discordgo.User
+	Message     *discordgo.MessageCreate
+	Args        []string
 
-	Conf			*Config
-	CmdHandler		*CommandHandler
+	Conf       *Config
+	CmdHandler *CommandHandler
 }
 
-/*
-// NewContext populates an instance of Context, 
-// returning it as a pointer
-*/
+//
+// NewContext populates an instance of Context and
+// then returns a pointer to the new instance
+//
 func NewContext(discord *discordgo.Session, guild *discordgo.Guild, textChannel *discordgo.Channel, user *discordgo.User,
-				message *discordgo.MessageCreate, conf *Config, cmdHandler *CommandHandler) *Context {
+	message *discordgo.MessageCreate, conf *Config, cmdHandler *CommandHandler) *Context {
 
 	ctx := new(Context)
 	ctx.Discord = discord
@@ -45,10 +46,9 @@ func NewContext(discord *discordgo.Session, guild *discordgo.Guild, textChannel 
 	return ctx
 }
 
-/*
-// Reply acts as a wrapper for 
-// discordgo.Session.ChannelMessageSend
-*/
+//
+// Reply is a wrapper for discordgo.Session.ChannelMessageSend
+//
 func (ctx Context) Reply(content string) *discordgo.Message {
 	msg, err := ctx.Discord.ChannelMessageSend(ctx.TextChannel.ID, content)
 	if err != nil {
