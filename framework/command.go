@@ -1,28 +1,48 @@
 package framework
 
 type (
-	Command func(Context)
-	CmdMap  map[string]Command
+	command func(Context)
+	cmdMap  map[string]command
 
+	//
+	// CommandHandler is a struct holding the
+	// collection of commands
+	//
 	CommandHandler struct {
-		cmds CmdMap
+		cmds cmdMap
 	}
 )
 
+//
+// NewCommandHandler initiates an instance of
+// CommandHandler and returns a pointer to it
+//
 func NewCommandHandler() *CommandHandler {
-	return &CommandHandler{make(CmdMap)}
+	return &CommandHandler{make(cmdMap)}
 }
 
-func (handler CommandHandler) GetCmds() CmdMap {
+//
+// GetCmds returns a map of all registered commands
+// for a given CommandHandler
+//
+func (handler CommandHandler) GetCmds() cmdMap {
 	return handler.cmds
 }
 
-func (handler CommandHandler) Get(name string) (*Command, bool) {
+//
+// Get returns a pointer to the command function
+// associated with the argument name
+//
+func (handler CommandHandler) Get(name string) (*command, bool) {
 	cmd, found := handler.cmds[name]
 	return &cmd, found
 }
 
-func (handler CommandHandler) Register(name string, command Command) {
+//
+// Register adds a new command function and its stringified name
+// to the given CommandHandler
+//
+func (handler CommandHandler) Register(name string, command command) {
 	handler.cmds[name] = command
 	if len(name) > 1 {
 		handler.cmds[name[:1]] = command
