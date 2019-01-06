@@ -2,10 +2,7 @@ package framework
 
 import (
 	"database/sql"
-	"encoding/json"
 	"fmt"
-	"io/ioutil"
-	"path/filepath"
 
 	_ "github.com/go-sql-driver/mysql"
 )
@@ -36,8 +33,8 @@ type Database struct {
 // and opens a database connection through TCP
 //
 func NewDatabase() *Database {
-	config, err := loadDbConfig(filepath.FromSlash("config/database.json"))
-	if err != nil {
+	var config DbConfig
+	if err := LoadFromJSON("config/database.json", &config); err != nil {
 		fmt.Println("NewDatabase() loading the config file failed:", err)
 		return nil
 	}
@@ -70,17 +67,4 @@ func (db *Database) Close() (err error) {
 	}
 	err = db.Handle.Close()
 	return
-}
-
-func loadDbConfig(fileName string) (*DbConfig, error) {
-	// Open config file
-	body, err := ioutil.ReadFile(fileName)
-	if err != nil {
-		return nil, err
-	}
-
-	// Populate configIns fields and return its address
-	var conf DbConfig
-	err = json.Unmarshal(body, &conf)
-	return &conf, err
 }

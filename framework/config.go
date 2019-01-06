@@ -24,20 +24,11 @@ type Config struct {
 // to the newly created config
 //
 func NewConfig() *Config {
-	conf := loadConfig()
-	conf.Database = *NewDatabase()
-	return conf
-}
-
-//
-// loadConfig reads from config.json to populate
-// the Bot struct
-//
-func loadConfig() *Config {
-	var config Config
-	if err := LoadFromJSON("config/config.json", &config); err != nil {
+	var conf Config
+	if err := LoadFromJSON("config/config.json", &conf); err != nil {
 		log.Fatal("error loading config file,", err)
 		return nil
 	}
-	return &config
+	conf.Database = *NewDatabase()
+	return &conf
 }
