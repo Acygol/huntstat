@@ -14,33 +14,19 @@ import (
 
 var (
 	config     *framework.Config
-	CmdHandler *framework.CommandHandler
+	cmdHandler *framework.CommandHandler
 	botID      string
 )
 
 func main() {
 	// load theHunter data
-	err := framework.LoadAnimals()
-	if err != nil {
-		fmt.Println("error loading animal data,", err)
-		return
-	}
-
-	if err = framework.LoadWeapons(); err != nil {
-		fmt.Println("error loading weapon data,", err)
-		return
-	}
-
-	if err = framework.LoadReserves(); err != nil {
-		fmt.Println("error loading reserve data,", err)
-		return
-	}
+	framework.LoadGameData()
 
 	// load config
 	config = framework.NewConfig()
 
 	// establish a command handler
-	CmdHandler = framework.NewCommandHandler()
+	cmdHandler = framework.NewCommandHandler()
 	registerCommands()
 
 	// establish discord session
@@ -112,7 +98,7 @@ func commandHandler(sess *discordgo.Session, msg *discordgo.MessageCreate) {
 	args := strings.Fields(content)
 	name := strings.ToLower(args[0])
 
-	command, found := CmdHandler.Get(name)
+	command, found := cmdHandler.Get(name)
 	if !found {
 		sess.ChannelMessageSend(msg.ChannelID, "Command not found")
 		return
@@ -127,7 +113,7 @@ func commandHandler(sess *discordgo.Session, msg *discordgo.MessageCreate) {
 		fmt.Println("Error while retrieving guild,", err)
 		return
 	}
-	ctx := framework.NewContext(sess, guild, channel, user, msg, config, CmdHandler)
+	ctx := framework.NewContext(sess, guild, channel, user, msg, config, cmdHandler)
 	ctx.Args = args[1:]
 
 	c := *command
@@ -135,47 +121,47 @@ func commandHandler(sess *discordgo.Session, msg *discordgo.MessageCreate) {
 }
 
 func registerCommands() {
-	CmdHandler.Register("info", cmd.InfoCommand)
-	CmdHandler.Register("help", cmd.InfoCommand)
+	cmdHandler.Register("info", cmd.InfoCommand)
+	cmdHandler.Register("help", cmd.InfoCommand)
 
-	/*
-		// generate random hunt conditions
-	*/
-	CmdHandler.Register("reserve", cmd.ReservesCommand)
-	CmdHandler.Register("reserves", cmd.ReservesCommand)
-	CmdHandler.Register("map", cmd.ReservesCommand)
-	CmdHandler.Register("maps", cmd.ReservesCommand)
+	//
+	// generate random hunt conditions
+	//
+	cmdHandler.Register("reserve", cmd.ReservesCommand)
+	cmdHandler.Register("reserves", cmd.ReservesCommand)
+	cmdHandler.Register("map", cmd.ReservesCommand)
+	cmdHandler.Register("maps", cmd.ReservesCommand)
 
-	CmdHandler.Register("weapon", cmd.WeaponsCommand)
-	CmdHandler.Register("weapons", cmd.WeaponsCommand)
-	CmdHandler.Register("gun", cmd.WeaponsCommand)
-	CmdHandler.Register("guns", cmd.WeaponsCommand)
+	cmdHandler.Register("weapon", cmd.WeaponsCommand)
+	cmdHandler.Register("weapons", cmd.WeaponsCommand)
+	cmdHandler.Register("gun", cmd.WeaponsCommand)
+	cmdHandler.Register("guns", cmd.WeaponsCommand)
 
-	CmdHandler.Register("animal", cmd.AnimalsCommand)
-	CmdHandler.Register("animals", cmd.AnimalsCommand)
+	cmdHandler.Register("animal", cmd.AnimalsCommand)
+	cmdHandler.Register("animals", cmd.AnimalsCommand)
 
-	CmdHandler.Register("modifier", cmd.ModifierCommand)
-	CmdHandler.Register("modifiers", cmd.ModifierCommand)
+	cmdHandler.Register("modifier", cmd.ModifierCommand)
+	cmdHandler.Register("modifiers", cmd.ModifierCommand)
 
-	CmdHandler.Register("theme", cmd.ThemeCommand)
-	CmdHandler.Register("themes", cmd.ThemeCommand)
+	cmdHandler.Register("theme", cmd.ThemeCommand)
+	cmdHandler.Register("themes", cmd.ThemeCommand)
 
-	/*
-		// register process
-	*/
-	CmdHandler.Register("register", cmd.RegisterCommand)
-	CmdHandler.Register("unregister", cmd.DeleteCommand)
-	CmdHandler.Register("delete", cmd.DeleteCommand)
-	CmdHandler.Register("remove", cmd.DeleteCommand)
+	//
+	// register process
+	//
+	cmdHandler.Register("register", cmd.RegisterCommand)
+	cmdHandler.Register("unregister", cmd.DeleteCommand)
+	cmdHandler.Register("delete", cmd.DeleteCommand)
+	cmdHandler.Register("remove", cmd.DeleteCommand)
 
-	/*
-		// generating widget links
-	*/
-	CmdHandler.Register("widget", cmd.WidgetCommand)
+	//
+	// generating widget links
+	//
+	cmdHandler.Register("widget", cmd.WidgetCommand)
 
-	/*
-		// leaderboard
-	*/
-	CmdHandler.Register("leaderboard", cmd.LeaderboardCommand)
-	CmdHandler.Register("leaderboards", cmd.LeaderboardCommand)
+	//
+	// leaderboard
+	//
+	cmdHandler.Register("leaderboard", cmd.LeaderboardCommand)
+	cmdHandler.Register("leaderboards", cmd.LeaderboardCommand)
 }
