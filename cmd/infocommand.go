@@ -2,20 +2,33 @@ package cmd
 
 import (
 	"bytes"
+	"fmt"
 
 	"github.com/acygol/huntstat/framework"
 )
 
 func InfoCommand(ctx framework.Context) {
-	cmds := ctx.CmdHandler.GetCmds()
-	buffer := bytes.NewBufferString("Commands: ")
-	for key := range cmds {
-		if len(key) == 1 {
-			continue
+	if len(ctx.Args) > 0 {
+		//
+		// command name was given
+		//
+		command, found := ctx.CmdHandler.Get(ctx.Args[0])
+		if !found {
+			ctx.Reply("Invalid command")
+		} else {
+			ctx.Reply(fmt.Sprintf("s!%s: %s", ctx.Args[0], command.CmdDesc))
 		}
-		buffer.WriteString(key)
-		buffer.WriteString(", ")
+	} else {
+		cmds := ctx.CmdHandler.GetCmds()
+		buffer := bytes.NewBufferString("Commands: ")
+		for key := range cmds {
+			if len(key) == 1 {
+				continue
+			}
+			buffer.WriteString(key)
+			buffer.WriteString(", ")
+		}
+		str := buffer.String()
+		ctx.Reply(str[:len(str)-2])
 	}
-	str := buffer.String()
-	ctx.Reply(str[:len(str)-2])
 }

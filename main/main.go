@@ -116,35 +116,41 @@ func commandHandler(sess *discordgo.Session, msg *discordgo.MessageCreate) {
 	ctx := framework.NewContext(sess, guild, channel, user, msg, config, cmdHandler)
 	ctx.Args = args[1:]
 
-	c := *command
+	c := command.CmdFunc
 	c(*ctx)
 }
 
 func registerCommands() {
-	cmdHandler.Register("info", cmd.InfoCommand)
-	cmdHandler.Register("help", cmd.InfoCommand)
+	command := cmdHandler.Register("info", cmd.InfoCommand)
+	command.Description("Prints all commands that the bot understands")
+	command.RegisterAlias("help")
 
 	//
 	// generate random hunt conditions
 	//
-	cmdHandler.Register("reserve", cmd.ReservesCommand)
-	cmdHandler.Register("reserves", cmd.ReservesCommand)
-	cmdHandler.Register("map", cmd.ReservesCommand)
-	cmdHandler.Register("maps", cmd.ReservesCommand)
+	command = cmdHandler.Register("reserve", cmd.ReservesCommand)
+	command.Description("Generates a random reserve to hunt on")
+	command.RegisterAlias("reserves")
+	command.RegisterAlias("map")
+	command.RegisterAlias("maps")
 
-	cmdHandler.Register("weapon", cmd.WeaponsCommand)
-	cmdHandler.Register("weapons", cmd.WeaponsCommand)
-	cmdHandler.Register("gun", cmd.WeaponsCommand)
-	cmdHandler.Register("guns", cmd.WeaponsCommand)
+	command = cmdHandler.Register("weapon", cmd.WeaponsCommand)
+	command.Description("Generates a random weapon loadout to hunt with")
+	command.RegisterAlias("weapons")
+	command.RegisterAlias("gun")
+	command.RegisterAlias("guns")
 
-	cmdHandler.Register("animal", cmd.AnimalsCommand)
-	cmdHandler.Register("animals", cmd.AnimalsCommand)
+	command = cmdHandler.Register("animal", cmd.AnimalsCommand)
+	command.Description("Generates a random weapon loadout to hunt with")
+	command.RegisterAlias("animals")
 
-	cmdHandler.Register("modifier", cmd.ModifierCommand)
-	cmdHandler.Register("modifiers", cmd.ModifierCommand)
+	command = cmdHandler.Register("modifier", cmd.ModifierCommand)
+	command.Description("Generates a random modifier to your hunt")
+	command.RegisterAlias("modifiers")
 
-	cmdHandler.Register("theme", cmd.ThemeCommand)
-	cmdHandler.Register("themes", cmd.ThemeCommand)
+	command = cmdHandler.Register("theme", cmd.ThemeCommand)
+	command.Description("Generates a random hunt theme")
+	command.RegisterAlias("themes")
 
 	//
 	// register process
