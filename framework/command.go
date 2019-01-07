@@ -9,9 +9,10 @@ type (
 	// command
 	//
 	Command struct {
-		CmdFunc func(Context)
-		CmdDesc string
-		aliases []string
+		CmdFunc   func(Context)
+		CmdDesc   string
+		CmdSyntax string
+		aliases   []string
 	}
 
 	//
@@ -83,6 +84,7 @@ func (handler CommandHandler) Get(name string) (*Command, bool) {
 func (handler CommandHandler) Register(name string, cmdFunc func(Context)) *Command {
 	cmd := new(Command)
 	cmd.CmdFunc = cmdFunc
+	cmd.CmdSyntax = ""
 	cmd.CmdDesc = "<not defined>"
 
 	handler.cmds[name] = cmd
@@ -106,3 +108,29 @@ func (command *Command) Description(desc string) {
 func (command *Command) RegisterAlias(alias string) {
 	command.aliases = append(command.aliases, alias)
 }
+
+//
+// Syntax defines how the given command must be used
+//
+func (command *Command) Syntax(syntax string) {
+	command.CmdSyntax = syntax
+}
+
+//
+// GetArgsCount returns the number of arguments the command
+// expects
+//
+/*
+func (command Command) GetArgsCount() int {
+	var args []string
+
+	// exclude optional arguments
+	for _, arg := range strings.Split(command.CmdSyntax, "<") {
+		if !strings.Contains(arg, "optional") {
+			args = append(args, arg)
+		}
+	}
+
+	return len(args)
+}
+*/

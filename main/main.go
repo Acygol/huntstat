@@ -123,6 +123,7 @@ func commandHandler(sess *discordgo.Session, msg *discordgo.MessageCreate) {
 func registerCommands() {
 	command := cmdHandler.Register("info", cmd.InfoCommand)
 	command.Description("Prints all commands that the bot understands")
+	command.Syntax("<(optional) command name>")
 	command.RegisterAlias("help")
 
 	//
@@ -157,6 +158,7 @@ func registerCommands() {
 	//
 	command = cmdHandler.Register("register", cmd.RegisterCommand)
 	command.Description("registers a user to the community")
+	command.Syntax("<@user> <hunter name>")
 	command.RegisterAlias("unregister")
 	command.RegisterAlias("delete")
 	command.RegisterAlias("remove")
@@ -164,14 +166,23 @@ func registerCommands() {
 	//
 	// generating profile links
 	//
-	cmdHandler.Register("widget", cmd.WidgetCommand).Description("generates the widget URL for a given community member")
-	cmdHandler.Register("profile", cmd.ProfileCommand).Description("generates the profile URL for a given community member")
-	cmdHandler.Register("uhc", cmd.UhcCommand).Description("generates the UHC statistics URL for a given community member")
+	command = cmdHandler.Register("widget", cmd.WidgetCommand)
+	command.Description("generates the widget URL for a given community member")
+	command.Syntax("<@user | all>")
+
+	command = cmdHandler.Register("profile", cmd.ProfileCommand)
+	command.Description("generates the profile URL for a given community member")
+	command.Syntax("<@user | all>")
+
+	command = cmdHandler.Register("uhc", cmd.UhcCommand)
+	command.Description("generates the UHC statistics URL for a given community member")
+	command.Syntax("<@user | all>")
 
 	//
 	// leaderboard
 	//
 	command = cmdHandler.Register("leaderboard", cmd.LeaderboardCommand)
 	command.Description("generates a leaderboard for the community")
+	command.Syntax("<(optional) animal name>")
 	command.RegisterAlias("leaderboards")
 }
