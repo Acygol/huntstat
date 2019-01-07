@@ -155,19 +155,19 @@ func registerCommands() {
 	//
 	// register process
 	//
-	cmdHandler.Register("register", cmd.RegisterCommand)
-	cmdHandler.Register("unregister", cmd.DeleteCommand)
-	cmdHandler.Register("delete", cmd.DeleteCommand)
-	cmdHandler.Register("remove", cmd.DeleteCommand)
+	command = cmdHandler.Register("register", cmd.RegisterCommand)
+	command.Description("registers a user to the community")
+	command.RegisterAlias("unregister")
+	command.RegisterAlias("delete")
+	command.RegisterAlias("remove")
 
 	//
 	// generating widget links
 	//
-	cmdHandler.Register("widget", cmd.WidgetCommand)
+	cmdHandler.Register("widget", cmd.WidgetCommand).Description("generates the widget URL for a given community member")
 
 	//
 	// leaderboard
 	//
-	cmdHandler.Register("leaderboard", cmd.LeaderboardCommand)
-	cmdHandler.Register("leaderboards", cmd.LeaderboardCommand)
+	cmdHandler.Register("leaderboard", cmd.LeaderboardCommand).Description("generates a leaderboard for the community")
 }
