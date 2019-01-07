@@ -12,8 +12,7 @@ import (
 )
 
 //
-// LeaderboardCommand is executed when someone
-// calls 's!leaderboard(s)'
+// LeaderboardCommand is executed when someone calls 's!leaderboard(s)'
 //
 func LeaderboardCommand(ctx framework.Context) {
 	//
@@ -75,7 +74,7 @@ func LeaderboardCommand(ctx framework.Context) {
 		// and then stringify it such that it becomes
 		// easier to use in finding all regex matches
 		//
-		resp, _ := http.Get(GetWidget(huntername))
+		resp, _ := http.Get(GetURL(huntername, WidgetURL))
 		retbody, _ := ioutil.ReadAll(resp.Body)
 		body := string(retbody)
 

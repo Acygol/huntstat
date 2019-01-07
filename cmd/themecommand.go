@@ -7,6 +7,9 @@ import (
 	"github.com/acygol/huntstat/framework"
 )
 
+//
+// ThemeCommand is executed when someone calls 's!theme(s)'
+//
 func ThemeCommand(ctx framework.Context) {
 	rand.Seed(time.Now().UnixNano())
 	themes := []string{

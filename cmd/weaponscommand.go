@@ -13,8 +13,7 @@ const (
 )
 
 //
-// WeaponsCommand is executed when someone
-// calls 's!weapon(s)'
+// WeaponsCommand is executed when someone calls 's!weapon(s)'
 //
 func WeaponsCommand(ctx framework.Context) {
 	weapons := framework.Weapons

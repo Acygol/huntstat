@@ -7,6 +7,9 @@ import (
 	"github.com/acygol/huntstat/framework"
 )
 
+//
+// ModifierCommand is executed when someone calls 's!modifier(s)'
+//
 func ModifierCommand(ctx framework.Context) {
 	rand.Seed(time.Now().UnixNano())
 	modifiers := []string{

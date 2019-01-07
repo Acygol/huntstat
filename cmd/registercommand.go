@@ -6,6 +6,10 @@ import (
 	"github.com/acygol/huntstat/framework"
 )
 
+//
+// RegisterCommand is executed when someone calls 's!register'
+// and registers a discord user to a community
+//
 func RegisterCommand(ctx framework.Context) {
 	if len(ctx.Args) < 2 {
 		ctx.Reply("Invalid syntax: s!register <@user> <hunter_name>")

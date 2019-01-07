@@ -162,12 +162,16 @@ func registerCommands() {
 	command.RegisterAlias("remove")
 
 	//
-	// generating widget links
+	// generating profile links
 	//
 	cmdHandler.Register("widget", cmd.WidgetCommand).Description("generates the widget URL for a given community member")
+	cmdHandler.Register("profile", cmd.ProfileCommand).Description("generates the profile URL for a given community member")
+	cmdHandler.Register("uhc", cmd.UhcCommand).Description("generates the UHC statistics URL for a given community member")
 
 	//
 	// leaderboard
 	//
-	cmdHandler.Register("leaderboard", cmd.LeaderboardCommand).Description("generates a leaderboard for the community")
+	command = cmdHandler.Register("leaderboard", cmd.LeaderboardCommand)
+	command.Description("generates a leaderboard for the community")
+	command.RegisterAlias("leaderboards")
 }

@@ -7,6 +7,9 @@ import (
 	"github.com/acygol/huntstat/framework"
 )
 
+//
+// InfoCommand is executed when someone calls 's!info'
+//
 func InfoCommand(ctx framework.Context) {
 	if len(ctx.Args) > 0 {
 		//

@@ -6,6 +6,10 @@ import (
 	"github.com/acygol/huntstat/framework"
 )
 
+//
+// DeleteCommand is executed when someone calls 's!unregister'
+// and unregisters a user from a community
+//
 func DeleteCommand(ctx framework.Context) {
 	// retrieve user roles
 	if !framework.IsAdministrator(ctx.Discord, ctx.Guild, ctx.User) {
