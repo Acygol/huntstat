@@ -1,14 +1,139 @@
 [
-    "Whitehart Island",
-    "Logger's Point",
-    "Settler Creeks",
-    "Redfeather Falls",
-    "Hirschfelden",
-    "Hemmeldal",
-    "Rougarou Bayou",
-    "Val-des-Bois",
-    "Bushrangers Run",
-    "Whiterime Ridge",
-    "Timbergold Trails",
-    "Piccabeen Bay"
+    {
+        "name": "Whitehart Island",
+        "animals": [
+            "Roosevelt Elk",
+            "Whitetail Deer",
+            "Blacktail Deer",
+            "Coyote",
+            "Bobcat",
+            "Turkey"
+        ]
+    },
+    {
+        "name": "Logger's Point",
+        "animals": [
+            "Feral Hog",
+            "Mule Deer",
+            "Whitetail Deer",
+            "Coyote",
+            "Bobcat",
+            "Pheasant",
+            "Cottontail Rabbit"
+        ]
+    },
+    {
+        "name": "Settler Creeks",
+        "animals": [
+            "Roosevelt Elk",
+            "Black Bear",
+            "Feral Hog",
+            "whitetail Deer",
+            "Bobcat",
+            "Turkey",
+            "Cottontail Rabbit"
+        ]
+    },
+    {
+        "name": "Redfeather Falls",
+        "animals": [
+            "Moose",
+            "Roosevelt Elk",
+            "Black Bear",
+            "Whitetail Deer",
+            "Blacktail Deer"
+        ]
+    },
+    {
+        "name": "Hirschfelden",
+        "animals": [
+            "Red Deer",
+            "Wild Boar",
+            "Roe Deer",
+            "Red Fox",
+            "Canada Goose",
+            "Pheasant"
+        ]
+    },
+    {
+        "name": "Hemmeldal",
+        "animals": [
+            "Moose",
+            "Brown Bear",
+            "Reindeer",
+            "Roe Deer",
+            "Red Fox",
+            "Eurasian Lynx",
+            "Willow Ptarmigan"
+        ]
+    },
+    {
+        "name": "Rougarou Bayou",
+        "animals": [
+            "Black Bear",
+            "Feral Hog",
+            "Whitetail Deer",
+            "Bobcat",
+            "Mallard Duck",
+            "American Black Duck",
+            "Northern Pintail",
+            "Gadwall"
+        ]
+    },
+    {
+        "name": "Val-des-Bois",
+        "animals": [
+            "Brown Bear",
+            "Red Deer",
+            "Alpine Ibex",
+            "Roe Deer",
+            "Red Fox",
+            "European Rabbit",
+            "Rock Ptarmigan"
+        ]
+    },
+    {
+        "name": "Bushrangers Run",
+        "animals": [
+            "Feral Hog",
+            "Red Kangaroo",
+            "Feral Goat",
+            "Red Fox",
+            "European Rabbit"
+        ]
+    },
+    {
+        "name": "Whiterime Ridge",
+        "animals": [
+            "Bison",
+            "Polar Bear",
+            "Moose",
+            "Sitka Deer",
+            "Dall Sheep",
+            "Arctic Fox",
+            "Snowshoe Hare"
+        ]
+    },
+    {
+        "name": "Timbergold Trails",
+        "animals": [
+            "Rocky Mountain Elk",
+            "Grizzly Bear",
+            "Mule Deer",
+            "Grey Wolf",
+            "Bighorn Sheep",
+            "White-tailed ptarmigan"
+        ]
+    },
+    {
+        "name": "Piccabeen Bay",
+        "animals": [
+            "Water Buffalo",
+            "Banteng",
+            "Sambar Deer",
+            "Rusa Deer",
+            "Feral Hog",
+            "Magpie Goose"
+        ]
+    }
 ]

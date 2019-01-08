@@ -11,14 +11,19 @@ import (
 // and registers a discord user to a community
 //
 func RegisterCommand(ctx framework.Context) {
-	if len(ctx.Args) < 2 {
-		ctx.Reply("Invalid syntax: s!register <@user> <hunter_name>")
+	if !ctx.CmdHandler.MustGet(ctx.CmdName).ValidateArgs(ctx) {
 		return
 	}
 
 	// it's an invalid mention
 	if !framework.IsDiscordMention(ctx.Args[0]) {
 		ctx.Reply("Invalid user")
+		return
+	}
+
+	// already registered
+	if framework.IsUserRegistered(ctx, ctx.Args[0]) {
+		ctx.Reply("User already registered")
 		return
 	}
 

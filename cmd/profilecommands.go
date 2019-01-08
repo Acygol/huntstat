@@ -44,8 +44,7 @@ const (
 // UhcCommand is executed when someone calls 's!uhc'
 //
 func UhcCommand(ctx framework.Context) {
-	if len(ctx.Args) < 1 {
-		ctx.Reply("Invalid syntax: s!uhc <@user | all>")
+	if !ctx.CmdHandler.MustGet(ctx.CmdName).ValidateArgs(ctx) {
 		return
 	}
 	processProfileQuery(ctx, UhcURL)
@@ -55,8 +54,7 @@ func UhcCommand(ctx framework.Context) {
 // ProfileCommand is executed when someone calls 's!profile'
 //
 func ProfileCommand(ctx framework.Context) {
-	if len(ctx.Args) < 1 {
-		ctx.Reply("Invalid syntax: s!profile <@user | all>")
+	if !ctx.CmdHandler.MustGet(ctx.CmdName).ValidateArgs(ctx) {
 		return
 	}
 	processProfileQuery(ctx, ProfileURL)
@@ -66,8 +64,7 @@ func ProfileCommand(ctx framework.Context) {
 // WidgetCommand is executed when someone calls 's!widget'
 //
 func WidgetCommand(ctx framework.Context) {
-	if len(ctx.Args) < 1 {
-		ctx.Reply("Invalid syntax: s!widget <@user | all>")
+	if !ctx.CmdHandler.MustGet(ctx.CmdName).ValidateArgs(ctx) {
 		return
 	}
 	processProfileQuery(ctx, WidgetURL)

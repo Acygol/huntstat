@@ -12,5 +12,5 @@ import (
 //
 func AnimalsCommand(ctx framework.Context) {
 	rand.Seed(time.Now().UnixNano())
-	ctx.Reply(framework.Animals[rand.Intn(len(framework.Animals))])
+	ctx.Reply(framework.Animals[rand.Intn(len(framework.Animals))].Name)
 }

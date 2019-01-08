@@ -1,0 +1,222 @@
+[
+    {
+        "name": "7mm-08 Ammunition (HP)",
+        "weight": 0.45
+    },
+    {
+        "name": "7mm-08 Ammunition (HV)",
+        "weight": 0.4
+    },
+    {
+        "name": ".17 HMR HV",
+        "weight": 0.26
+    },
+    {
+        "name": "7x64mm Ammunition",
+        "weight": 0.65
+    },
+    {
+        "name": "9.3x74R Ammunition",
+        "weight": 0.65
+    },
+    {
+        "name": ".405 Ammunition",
+        "weight": 0.65
+    },
+    {
+        "name": ".30 R Ammunition",
+        "weight": 0.55
+    },
+    {
+        "name": ".17 HMR",
+        "weight": 0.25
+    },
+    {
+        "name": ".340 Weatherby Magnum Ammunition",
+        "weight": 0.75
+    },
+    {
+        "name": ".30-06 Round Nose Ammunition",
+        "weight": 0.55
+    },
+    {
+        "name": "7.62x54R SP Ammunition",
+        "weight": 0.5
+    },
+    {
+        "name": ".45-70 Government",
+        "weight": 0.7
+    },
+    {
+        "name": ".303 British Ammunition",
+        "weight": 0.25
+    },
+    {
+        "name": "7mm Magnum",
+        "weight": 0.4
+    },
+    {
+        "name": ".30-30 Nosler Partition",
+        "weight": 0.5
+    },
+    {
+        "name": ".22 Air Rifle Pellet",
+        "weight": 0.25
+    },
+    {
+        "name": "6.5x55 Nosler AccuBond",
+        "weight": 0.45
+    },
+    {
+        "name": ".223 Nosler Ballistic Tip",
+        "weight": 0.35
+    },
+    {
+        "name": "9.3x62 Nosler Partition",
+        "weight": 0.65
+    },
+    {
+        "name": "8x57 IS Nosler Partition",
+        "weight": 0.55
+    },
+    {
+        "name": ".308 Nosler Partition",
+        "weight": 0.5
+    },
+    {
+        "name": ".270 Nosler Ballistic Tip",
+        "weight": 0.5
+    },
+    {
+        "name": ".30-06 Nosler Partition",
+        "weight": 0.55
+    },
+    {
+        "name": ".300 Nosler AccuBond",
+        "weight": 0.6
+    },
+    {
+        "name": ".243 Nosler Ballistic Tip",
+        "weight": 0.45
+    },
+    {
+        "name": "10mm Auto Ammunition",
+        "weight": 0.6
+    },
+    {
+        "name": ".45 Long Colt Handgun",
+        "weight": 0.6
+    },
+    {
+        "name": ".22 LR Ammunition",
+        "weight": 0.25
+    },
+    {
+        "name": ".454 Nosler Custom Handgun",
+        "weight": 0.6
+    },
+    {
+        "name": ".44 Nosler Sporting Handgun",
+        "weight": 0.5
+    },
+    {
+        "name": ".357 Nosler Sporting Handgun",
+        "weight": 0.45
+    },
+    {
+        "name": "10 GA Slug Shells",
+        "weight": 0.9
+    },
+    {
+        "name": "10 GA Buckshot Shells",
+        "weight": 0.9
+    },
+    {
+        "name": "10 GA Birdshot Shells",
+        "weight": 0.9
+    },
+    {
+        "name": "16 GA Birdshot Shells",
+        "weight": 0.85
+    },
+    {
+        "name": "16 GA Buckshot Shells",
+        "weight": 0.85
+    },
+    {
+        "name": "16 GA Slug Shells",
+        "weight": 0.85
+    },
+    {
+        "name": "20 GA Birdshot Shells",
+        "weight": 0.75
+    },
+    {
+        "name": "12 GA Slug Shells",
+        "weight": 0.85
+    },
+    {
+        "name": "12 GA Buckshot Shells",
+        "weight": 0.85
+    },
+    {
+        "name": "12 GA Birdshot Shells",
+        "weight": 0.85
+    },
+    {
+        "name": "Crossbow Bolts",
+        "weight": 0.5
+    },
+    {
+        "name": "Cable Backed Bow Arrows",
+        "weight": 0.6
+    },
+    {
+        "name": "Longbow Arrows",
+        "weight": 0.6
+    },
+    {
+        "name": "Crossbow Tracer Arrows",
+        "weight": 0.5
+    },
+    {
+        "name": "Compound Tracer Arrows",
+        "weight": 0.5
+    },
+    {
+        "name": "Recurve Tracer Arrows",
+        "weight": 0.6
+    },
+    {
+        "name": "Recurve Arrows",
+        "weight": 0.6
+    },
+    {
+        "name": "Crossbow Arrows",
+        "weight": 0.5
+    },
+    {
+        "name": "Compound Arrows",
+        "weight": 0.5
+    },
+    {
+        "name": ".45 Copper Bullet",
+        "weight": 0.5
+    },
+    {
+        "name": ".50 Lead Bullet",
+        "weight": 0.5
+    },
+    {
+        "name": ".45 Saboted Bullet",
+        "weight": 0.4
+    },
+    {
+        "name": ".50 Conical Bullet",
+        "weight": 0.5
+    },
+    {
+        "name": ".50 Patched Round Ball",
+        "weight": 0.5
+    }
+]

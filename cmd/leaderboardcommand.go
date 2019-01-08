@@ -22,7 +22,7 @@ func LeaderboardCommand(ctx framework.Context) {
 	//
 	var records []*framework.Record
 	for i := 0; i < len(framework.Animals); i++ {
-		records = append(records, framework.NewRecord(framework.Animals[i]))
+		records = append(records, framework.NewRecord(framework.Animals[i].Name))
 	}
 
 	//

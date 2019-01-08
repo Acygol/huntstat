@@ -1,6 +1,9 @@
 package framework
 
-import "strings"
+import (
+	"fmt"
+	"strings"
+)
 
 type (
 	//
@@ -78,6 +81,20 @@ func (handler CommandHandler) Get(name string) (*Command, bool) {
 }
 
 //
+// MustGet is a wrapper around CommandHandler.Get() that panics
+// when it cannot find the given command. This method should only
+// be used when you are certain that the command exists. When
+// used properly, it allows for method chaining
+//
+func (handler CommandHandler) MustGet(name string) *Command {
+	cmd, found := handler.Get(name)
+	if !found {
+		panic(`CommandHandler: MustGet(` + name + `): command not found`)
+	}
+	return cmd
+}
+
+//
 // Register adds a new command function and its stringified name
 // to the given CommandHandler.
 //
@@ -120,17 +137,40 @@ func (command *Command) Syntax(syntax string) {
 // GetArgsCount returns the number of arguments the command
 // expects
 //
-/*
 func (command Command) GetArgsCount() int {
 	var args []string
 
 	// exclude optional arguments
 	for _, arg := range strings.Split(command.CmdSyntax, "<") {
-		if !strings.Contains(arg, "optional") {
+		if !strings.Contains(arg, "optional") && len(arg) > 0 {
 			args = append(args, arg)
 		}
 	}
-
 	return len(args)
 }
+
+/*
+func (command Command) HasOnlyOptionalArgs() bool {
+	for _, arg := range strings.Split(command.CmdSyntax, "<") {
+		if len(arg) < 1 {
+			continue
+		}
+		if !strings.Contains(arg, "optional") {
+			return false
+		}
+	}
+	return true
+}
 */
+
+//
+// ValidateArgs is a helper method to validate arguments
+// of a given command
+//
+func (command Command) ValidateArgs(ctx Context) bool {
+	if len(ctx.Args) < command.GetArgsCount() {
+		ctx.Reply(fmt.Sprintf("Invalid syntax: s!%s %s", ctx.CmdName, command.CmdSyntax))
+		return false
+	}
+	return true
+}

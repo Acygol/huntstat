@@ -17,8 +17,7 @@ func DeleteCommand(ctx framework.Context) {
 		return
 	}
 
-	if len(ctx.Args) < 1 {
-		ctx.Reply("Invalid syntax: s!delete <@user>")
+	if !ctx.CmdHandler.MustGet(ctx.CmdName).ValidateArgs(ctx) {
 		return
 	}
 
