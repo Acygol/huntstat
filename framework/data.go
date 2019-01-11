@@ -8,45 +8,46 @@ import (
 	"time"
 )
 
-//
-// Ammo holds basic information regarding an ammotype
-// in TheHunter
-//
-type Ammo struct {
-	Name   string
-	Weight float64
-}
+type (
+	//
+	// Reserve is an encapsulating type for reserve names
+	//
+	Reserve struct {
+		Name string
+	}
+
+	//
+	// AmmoType holds basic information regarding an ammotype
+	//
+	AmmoType struct {
+		Name   string
+		Weight float64
+	}
+
+	//
+	// Animal holds basic information regarding a huntable animal
+	//
+	Animal struct {
+		Name          string
+		PermittedAmmo []AmmoType
+		Reserves      []Reserve
+	}
+
+	//
+	// Weapon holds basic information regarding a weapon
+	//
+	Weapon struct {
+		Name      string
+		Type      string
+		Editions  []string
+		AmmoTypes []AmmoType
+		Weight    float64
+	}
+)
 
 //
-// Animal holds basic information regarding an animal
-// in TheHunter
+// constant substitute for the different weapon types
 //
-type Animal struct {
-	Name string
-	Ammo []Ammo
-}
-
-//
-// Weapon holds all information regarding a weapon
-// in TheHunter
-//
-type Weapon struct {
-	Name     string
-	Type     string
-	Editions []string
-	Ammo     []Ammo
-	Weight   float64
-}
-
-//
-// Reserve holds all information regarding a reserve
-// in TheHunter
-//
-type Reserve struct {
-	Name    string
-	Animals []Animal
-}
-
 const (
 	Primary = "primary"
 	Sidearm = "sidearm"
@@ -54,26 +55,22 @@ const (
 
 var (
 	//
-	// Ammunitions holds all ammo types currently
-	// in TheHunter
+	// AmmoTypes holds all ammo types in TheHunter
 	//
-	Ammunitions []Ammo
+	AmmoTypes []AmmoType
 
 	//
-	// Animals holds all existing animals currently
-	// in TheHunter
+	// Animals holds all existing animals in TheHunter
 	//
 	Animals []Animal
 
 	//
-	// Weapons holds all existing weapons currently
-	// in TheHunter
+	// Weapons holds all weapons in TheHunter
 	//
 	Weapons []Weapon
 
 	//
-	// Reserves holds all existing reserves currently
-	// in TheHunter
+	// Reserves holds all existing reserves in TheHunter
 	//
 	Reserves []Reserve
 )
@@ -84,14 +81,16 @@ var (
 // reserves
 //
 func LoadGameData() {
-	err := LoadFromJSON("data/ammo.json", &Ammunitions)
-	if err != nil {
+	if err := LoadFromJSON("data/json/ammo.json", &AmmoTypes); err != nil {
 		log.Fatal("error loading ammo.json", err)
 		return
 	}
+	if err := LoadFromJSON("data/json/reserves.json", &Reserves); err != nil {
+		log.Fatal("error loading reserves.json,", err)
+	}
 	loadWeapons()
 	loadAnimals()
-	loadReserves()
+	//loadReserves()
 }
 
 func loadWeapons() {
@@ -110,7 +109,7 @@ func loadWeapons() {
 		Weight   float64
 	}
 	var weap []tmpWeap
-	if err := LoadFromJSON("data/weapons.json", &weap); err != nil {
+	if err := LoadFromJSON("data/json/weapons.json", &weap); err != nil {
 		log.Fatal("error loading weapons.json,", err)
 	}
 
@@ -118,10 +117,10 @@ func loadWeapons() {
 	// Ammo types loaded from the JSON must be converted
 	// to their datatype representation
 	//
-	var ammotypes []Ammo
+	var ammotypes []AmmoType
 	for _, tmpw := range weap {
 		for _, ammoTypeName := range tmpw.Ammo {
-			for _, ammoType := range Ammunitions {
+			for _, ammoType := range AmmoTypes {
 				if strings.Compare(ammoType.Name, ammoTypeName) == 0 {
 					ammotypes = append(ammotypes, ammoType)
 				}
@@ -132,7 +131,7 @@ func loadWeapons() {
 		// an instance of the Weapon type with its ammo
 		// field value as the correct data type
 		//
-		Weapons = append(Weapons, Weapon{Name: tmpw.Name, Type: tmpw.Type, Editions: tmpw.Editions, Ammo: ammotypes, Weight: tmpw.Weight})
+		Weapons = append(Weapons, Weapon{Name: tmpw.Name, Type: tmpw.Type, Editions: tmpw.Editions, AmmoTypes: ammotypes, Weight: tmpw.Weight})
 	}
 }
 
@@ -145,80 +144,46 @@ func loadAnimals() {
 	// by their names
 	//
 	type tmpAnimal struct {
-		Name string
-		Ammo []string
+		Name     string
+		Ammo     []string
+		Reserves []string
 	}
 	var tmpanimals []tmpAnimal
-	if err := LoadFromJSON("data/animals.json", &tmpanimals); err != nil {
+	if err := LoadFromJSON("data/json/animals.json", &tmpanimals); err != nil {
 		log.Fatal("error loading animals.json,", err)
 	}
 
-	//
-	// Ammo types loaded from the JSON must be converted
-	// to their datatype representation
-	//
-	var ammotypes []Ammo
+	var ammotypes []AmmoType
+	var reserves []Reserve
 	for _, tmpa := range tmpanimals {
+		//
+		// Ammo types loaded from the JSON must be converted
+		// to their datatype representation
+		//
 		for _, ammoTypeName := range tmpa.Ammo {
-			for _, ammoType := range Ammunitions {
-				if strings.Compare(ammoType.Name, ammoTypeName) == 0 {
+			for _, ammoType := range AmmoTypes {
+				if strings.EqualFold(ammoType.Name, ammoTypeName) {
 					ammotypes = append(ammotypes, ammoType)
 				}
 			}
 		}
 		//
-		// Construct, and append to the global Animals slice,
-		// an instance of the Animal type with its ammo
-		// field value as the correct data type
+		// Reserves loaded from the JSON must be converted
+		// to their datatype representation
 		//
-		Animals = append(Animals, Animal{Name: tmpa.Name, Ammo: ammotypes})
-	}
-}
-
-func loadReserves() {
-	//
-	// Animals are stored as a string in data/reserves.json
-	// and not as their object representation. For this reason
-	// there is a need to define a temporary alternative
-	// struct for the Reserve struct which can hold animals by
-	// their names
-	//
-	type tmpReserve struct {
-		Name    string
-		Animals []string
-	}
-	var tmpReserves []tmpReserve
-
-	if err := LoadFromJSON("data/reserves.json", &tmpReserves); err != nil {
-		log.Fatal("error loading reserves.json,", err)
-	}
-
-	//
-	// Animals loaded from the JSON must be converted
-	// to their datatype representation
-	//
-	var tmpAnimals []Animal
-	for _, tmpr := range tmpReserves {
-		//
-		// Go over all animal names in tmpr.Animals
-		//
-		for _, animalName := range tmpr.Animals {
-			//
-			// Go over all animal objects in the global Animals
-			// slice and check if its name equals animalName
-			//
-			for _, animal := range Animals {
-				if strings.EqualFold(animal.Name, animalName) {
-					tmpAnimals = append(tmpAnimals, animal)
+		for _, reserveName := range tmpa.Reserves {
+			for _, reserve := range Reserves {
+				if strings.EqualFold(reserve.Name, reserveName) {
+					reserves = append(reserves, reserve)
 				}
 			}
 		}
 		//
-		// Construct, and append to the global Reserves slice,
-		// an instance of the Reserve type with its animals
-		// field value as the correct data type
+		// Construct, and append to the global Animals slice,
+		// an instance of the Animal type with its ammo and
+		// reserve field values as their correct data type
 		//
-		Reserves = append(Reserves, Reserve{Name: tmpr.Name, Animals: tmpAnimals})
+		Animals = append(Animals, Animal{Name: tmpa.Name, PermittedAmmo: ammotypes, Reserves: reserves})
 	}
 }
 
@@ -228,7 +193,7 @@ func loadReserves() {
 // generates a random weapon, deletes the index
 // generated, and returns the name of weapon
 //
-func GenerateRandomWeaponOnce(weapons []Weapon, weaptype string, reserve Reserve, inventoryCap float64) (Weapon, error) {
+func GenerateRandomWeaponOnce(weapons []Weapon, weaptype string, inReserve Reserve, inventoryCap float64) (Weapon, error) {
 	rand.Seed(time.Now().UnixNano())
 	index := -1
 
@@ -239,9 +204,9 @@ func GenerateRandomWeaponOnce(weapons []Weapon, weaptype string, reserve Reserve
 	// Otherwise the for loop in the else statement will go on forever.
 	//
 	if strings.Compare(weaptype, Primary) == 0 && inventoryCap < 4 {
-		return Weapon{}, errors.New("cannot generate primary weapon, inventoryCap too low")
+		return Weapon{}, &InventoryTooSmall{4, inventoryCap}
 	} else if strings.Compare(weaptype, Sidearm) == 0 && inventoryCap < 1 {
-		return Weapon{}, errors.New("cannot generate sidearm weapon, inventoryCap too low")
+		return Weapon{}, &InventoryTooSmall{1, inventoryCap}
 	} else {
 		for {
 
@@ -271,17 +236,22 @@ func GenerateRandomWeaponOnce(weapons []Weapon, weaptype string, reserve Reserve
 			// checks all evaluate to true, then the weapon is a good
 			// pick
 			//
-			for _, animal := range reserve.Animals {
-				for _, weapAmmo := range weapons[index].Ammo {
-					if weapAmmo.IsPermittedAmmo(animal) {
-						// delete the element at [index] from the input slice
-						// but only after it has returned the weapon
-						defer func() {
-							if index != -1 {
-								weapons = append(weapons[:index], weapons[index+1:]...)
+			loweredReserve := strings.ToLower(inReserve.Name)
+			for _, animal := range Animals {
+				for _, reserve := range animal.Reserves {
+					if strings.Contains(strings.ToLower(reserve.Name), loweredReserve) {
+						for _, weapAmmo := range weapons[index].AmmoTypes {
+							if weapAmmo.IsPermittedAmmo(animal) {
+								// delete the element at [index] from the input slice
+								// but only after it has returned the weapon
+								defer func() {
+									if index != -1 {
+										weapons = append(weapons[:index], weapons[index+1:]...)
+									}
+								}()
+								return weapons[index], nil
 							}
-						}()
-						return weapons[index], nil
+						}
 					}
 				}
 			}
@@ -310,8 +280,8 @@ func GenerateRandomWeapon(weaptype string) int {
 // IsPermittedAmmo checks if the given ammo type can be
 // used to hunt on a particular animal
 //
-func (ammoType *Ammo) IsPermittedAmmo(animal Animal) bool {
-	for _, ammo := range animal.Ammo {
+func (ammoType *AmmoType) IsPermittedAmmo(animal Animal) bool {
+	for _, ammo := range animal.PermittedAmmo {
 		if strings.Compare(ammo.Name, ammoType.Name) == 0 {
 			return true
 		}
