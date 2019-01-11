@@ -1,6 +1,9 @@
 [
     {
         "name": "Alpine Ibex",
+        "reserves": [
+            "Val-des-Bois"
+        ],
         "ammo": [
             "7mm-08 Ammunition (HP)",
             "7mm-08 Ammunition (HV)",
@@ -44,6 +47,9 @@
     },
     {
         "name": "American Black Duck",
+        "reserves": [
+            "Rougarou Bayou"
+        ],
         "ammo": [
             ".17 HMR",
             ".22 Air Rifle Pellet",
@@ -65,6 +71,9 @@
     },
     {
         "name": "Arctic Fox",
+        "reserves": [
+            "Whiterime Ridge"
+        ],
         "ammo": [
             "7mm-08 Ammunition (HV)",
             ".17 HMR HV",
@@ -87,6 +96,9 @@
     },
     {
         "name": "Banteng",
+        "reserves": [
+            "Piccabeen Bay"
+        ],
         "ammo": [
             "9.3x74R Ammunition",
             ".405 Ammunition",
@@ -109,6 +121,9 @@
     },
     {
         "name": "Bighorn Sheep",
+        "reserves": [
+            "Timbergold Trails"
+        ],
         "ammo": [
             "7mm-08 Ammunition (HP)",
             "7mm-08 Ammunition (HV)",
@@ -152,6 +167,9 @@
     },
     {
         "name": "Bison",
+        "reserves": [
+            "Whiterime Ridge"
+        ],
         "ammo": [
             "9.3x74R Ammunition",
             ".405 Ammunition",
@@ -168,6 +186,11 @@
     },
     {
         "name": "Black Bear",
+        "reserves": [
+            "Settler Creeks",
+            "Redfeather Falls",
+            "Rougarou Bayou"
+        ],
         "ammo": [
             "7mm-08 Ammunition (HP)",
             "7mm-08 Ammunition (HV)",
@@ -208,6 +231,10 @@
     },
     {
         "name": "Blacktail Deer",
+        "reserves": [
+            "Whitehart Island",
+            "Redfeather Falls"
+        ],
         "ammo": [
             "7mm-08 Ammunition (HP)",
             "7mm-08 Ammunition (HV)",
@@ -251,6 +278,12 @@
     },
     {
         "name": "Bobcat",
+        "reserves": [
+            "Whitehart Island",
+            "Logger's Point",
+            "Settler Creeks",
+            "Rougarou Bayou"
+        ],
         "ammo": [
             "7mm-08 Ammunition (HV)",
             ".17 HMR HV",
@@ -274,6 +307,10 @@
     },
     {
         "name": "Brown Bear",
+        "reserves": [
+            "Hemmeldal",
+            "Val-des-Bois"
+        ],
         "ammo": [
             "7mm-08 Ammunition (HP)",
             "7x64mm Ammunition",
@@ -311,6 +348,9 @@
     },
     {
         "name": "Canada Goose",
+        "reserves": [
+            "Hirschfelden"
+        ],
         "ammo": [
             ".17 HMR HV",
             ".22 LR Ammunition",
@@ -332,6 +372,10 @@
     },
     {
         "name": "Cottontail Rabbit",
+        "reserves": [
+            "Logger's Point",
+            "Settler Creeks"
+        ],
         "ammo": [
             ".17 HMR",
             ".22 Air Rifle Pellet",
@@ -353,6 +397,10 @@
     },
     {
         "name": "Coyote",
+        "reserves": [
+            "Whitehart Island",
+            "Logger's Point"
+        ],
         "ammo": [
             "7mm-08 Ammunition (HV)",
             ".17 HMR HV",
@@ -396,6 +444,9 @@
     },
     {
         "name": "Dall Sheep",
+        "reserves": [
+            "Whiterime Ridge"
+        ],
         "ammo": [
             "7mm-08 Ammunition (HP)",
             "7mm-08 Ammunition (HV)",
@@ -440,6 +491,9 @@
     },
     {
         "name": "Eurasian Lynx",
+        "reserves": [
+            "Hemmeldal"
+        ],
         "ammo": [
             "7mm-08 Ammunition (HV)",
             ".17 HMR HV",
@@ -463,6 +517,10 @@
     },
     {
         "name": "European Rabbit",
+        "reserves": [
+            "Val-des-Bois",
+            "Bushrangers Run"
+        ],
         "ammo": [
             ".17 HMR",
             ".22 Air Rifle Pellet",
@@ -484,6 +542,9 @@
     },
     {
         "name": "Feral Goat",
+        "reserves": [
+            "Bushrangers Run"
+        ],
         "ammo": [
             "7mm-08 Ammunition (HP)",
             "7mm-08 Ammunition (HV)",
@@ -528,6 +589,13 @@
     },
     {
         "name": "Feral Hog",
+        "reserves": [
+            "Logger's Point",
+            "Settler Creeks",
+            "Rougarou Bayou",
+            "Bushrangers Run",
+            "Piccabeen Bay"
+        ],
         "ammo": [
             "7mm-08 Ammunition (HP)",
             "7mm-08 Ammunition (HV)",
@@ -571,6 +639,9 @@
     },
     {
         "name": "Gadwall",
+        "reserves": [
+            "Rougarou Bayou"
+        ],
         "ammo": [
             ".17 HMR",
             ".22 Air Rifle Pellet",
@@ -592,6 +663,9 @@
     },
     {
         "name": "Grey Wolf",
+        "reserves": [
+            "Timbergold Trails"
+        ],
         "ammo": [
             "7mm-08 Ammunition (HP)",
             "7mm-08 Ammunition (HV)",
@@ -636,6 +710,9 @@
     },
     {
         "name": "Grizzly Bear",
+        "reserves": [
+            "Timbergold Trails"
+        ],
         "ammo": [
             "7mm-08 Ammunition (HP)",
             "7x64mm Ammunition",
@@ -673,6 +750,9 @@
     },
     {
         "name": "Magpie Goose",
+        "reserves": [
+            "Piccabeen Bay"
+        ],
         "ammo": [
             ".17 HMR HV",
             ".22 LR Ammunition",
@@ -693,7 +773,10 @@
         ]
     },
     {
-        "name": "Mallard",
+        "name": "Mallard Duck",
+        "reserves": [
+            "Rougarou Bayou"
+        ],
         "ammo": [
             ".17 HMR",
             ".22 Air Rifle Pellet",
@@ -715,6 +798,11 @@
     },
     {
         "name": "Moose",
+        "reserves": [
+            "Redfeather Falls",
+            "Hemmeldal",
+            "Whiterime Ridge"
+        ],
         "ammo": [
             "7mm-08 Ammunition (HP)",
             "7x64mm Ammunition",
@@ -752,6 +840,10 @@
     },
     {
         "name": "Mule Deer",
+        "reserves": [
+            "Logger's Point",
+            "Timbergold Trails"
+        ],
         "ammo": [
             "7mm-08 Ammunition (HP)",
             "7mm-08 Ammunition (HV)",
@@ -795,6 +887,9 @@
     },
     {
         "name": "Northern Pintail",
+        "reserves": [
+            "Rougarou Bayou"
+        ],
         "ammo": [
             ".17 HMR",
             ".22 Air Rifle Pellet",
@@ -816,6 +911,10 @@
     },
     {
         "name": "Pheasant",
+        "reserves": [
+            "Logger's Point",
+            "Hirschfelden"
+        ],
         "ammo": [
             ".17 HMR",
             ".22 Air Rifle Pellet",
@@ -837,6 +936,9 @@
     },
     {
         "name": "Polar Bear",
+        "reserves": [
+            "Whiterime Ridge"
+        ],
         "ammo": [
             "7mm-08 Ammunition (HP)",
             "7x64mm Ammunition",
@@ -872,6 +974,10 @@
     },
     {
         "name": "Red Deer",
+        "reserves": [
+            "Hirschfelden",
+            "Val-des-Bois"
+        ],
         "ammo": [
             "7mm-08 Ammunition (HP)",
             "7mm-08 Ammunition (HV)",
@@ -915,6 +1021,12 @@
     },
     {
         "name": "Red Fox",
+        "reserves": [
+            "Hirschfelden",
+            "Hemmeldal",
+            "Val-des-Bois",
+            "Bushrangers Run"
+        ],
         "ammo": [
             "7mm-08 Ammunition (HV)",
             ".17 HMR HV",
@@ -938,6 +1050,9 @@
     },
     {
         "name": "Red Kangaroo",
+        "reserves": [
+            "Bushrangers Run"
+        ],
         "ammo": [
             "7mm-08 Ammunition (HP)",
             "7mm-08 Ammunition (HV)",
@@ -982,6 +1097,9 @@
     },
     {
         "name": "Reindeer",
+        "reserves": [
+            "Hemmeldal"
+        ],
         "ammo": [
             "7mm-08 Ammunition (HP)",
             "7mm-08 Ammunition (HV)",
@@ -1021,6 +1139,9 @@
     },
     {
         "name": "Rock Ptarmigan",
+        "reserves": [
+            "Val-des-Bois"
+        ],
         "ammo": [
             ".17 HMR",
             ".22 Air Rifle Pellet",
@@ -1042,6 +1163,9 @@
     },
     {
         "name": "Rocky Mountain Elk",
+        "reserves": [
+            "Timbergold Trails"
+        ],
         "ammo": [
             "7mm-08 Ammunition (HP)",
             "7x64mm Ammunition",
@@ -1081,6 +1205,11 @@
     },
     {
         "name": "Roe Deer",
+        "reserves": [
+            "Hirschfelden",
+            "Hemmeldal",
+            "Val-des-Bois"
+        ],
         "ammo": [
             "7mm-08 Ammunition (HP)",
             "7mm-08 Ammunition (HV)",
@@ -1125,6 +1254,11 @@
     },
     {
         "name": "Roosevelt Elk",
+        "reserves": [
+            "Whitehart Island",
+            "Settler Creeks",
+            "Redfeather Falls"
+        ],
         "ammo": [
             "7mm-08 Ammunition (HP)",
             "7x64mm Ammunition",
@@ -1164,6 +1298,9 @@
     },
     {
         "name": "Rusa deer",
+        "reserves": [
+            "Piccabeen Bay"
+        ],
         "ammo": [
             "7mm-08 Ammunition (HP)",
             "7mm-08 Ammunition (HV)",
@@ -1207,6 +1344,9 @@
     },
     {
         "name": "Sambar Deer",
+        "reserves": [
+            "Piccabeen Bay"
+        ],
         "ammo": [
             "7mm-08 Ammunition (HP)",
             "7mm-08 Ammunition (HV)",
@@ -1247,6 +1387,9 @@
     },
     {
         "name": "Sitka Deer",
+        "reserves": [
+            "Whiterime Ridge"
+        ],
         "ammo": [
             "7mm-08 Ammunition (HP)",
             "7mm-08 Ammunition (HV)",
@@ -1290,6 +1433,9 @@
     },
     {
         "name": "Snowshoe Hare",
+        "reserves": [
+            "Whiterime Ridge"
+        ],
         "ammo": [
             ".17 HMR",
             ".22 Air Rifle Pellet",
@@ -1311,6 +1457,10 @@
     },
     {
         "name": "Turkey",
+        "reserves": [
+            "Whitehart Island",
+            "Settler Creeks"
+        ],
         "ammo": [
             ".17 HMR HV",
             ".223 Nosler Ballistic Tip",
@@ -1334,6 +1484,9 @@
     },
     {
         "name": "Water Buffalo",
+        "reserves": [
+            "Piccabeen Bay"
+        ],
         "ammo": [
             "9.3x74R Ammunition",
             ".405 Ammunition",
@@ -1352,6 +1505,9 @@
     },
     {
         "name": "White-tailed Ptarmigan",
+        "reserves": [
+            "Timbergold Trails"
+        ],
         "ammo": [
             ".17 HMR",
             ".22 Air Rifle Pellet",
@@ -1373,6 +1529,13 @@
     },
     {
         "name": "Whitetail",
+        "reserves": [
+            "Whitehart Island",
+            "Logger's Point",
+            "Settler Creeks",
+            "Redfeather Falls",
+            "Rougarou Bayou"
+        ],
         "ammo": [
             "7mm-08 Ammunition (HP)",
             "7mm-08 Ammunition (HV)",
@@ -1416,6 +1579,9 @@
     },
     {
         "name": "Wild Boar",
+        "reserves": [
+            "Hirschfelden"
+        ],
         "ammo": [
             "7mm-08 Ammunition (HP)",
             "7mm-08 Ammunition (HV)",
@@ -1459,6 +1625,9 @@
     },
     {
         "name": "Willow Ptarmigan",
+        "reserves": [
+            "Hemmeldal"
+        ],
         "ammo": [
             ".17 HMR",
             ".22 Air Rifle Pellet",
