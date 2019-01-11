@@ -38,26 +38,24 @@ func WeaponsCommand(ctx framework.Context) {
 	if err != nil {
 		ctx.Reply(fmt.Sprintf("error while retrieving primary weapon: %v", err))
 		return
-	} else {
-		fmt.Fprintf(&reply, "Primary: %v\n", weapName)
 	}
+	fmt.Fprintf(&reply, "Primary: %v\n", weapName)
+
 	// when the inventoryCap is 20, generate second primary
 	if inventoryCap > 10.0 {
 		weapName, err = getRandomWeapon(weapons, framework.Primary, reserve, &inventoryCap)
 		if err != nil {
 			ctx.Reply(fmt.Sprintf("error while retrieving second primary weapon: %v", err))
 			return
-		} else {
-			fmt.Fprintf(&reply, "Second primary: %v\n", weapName)
 		}
+		fmt.Fprintf(&reply, "Second primary: %v\n", weapName)
 	}
 	weapName, err = getRandomWeapon(weapons, framework.Sidearm, reserve, &inventoryCap)
 	if err != nil {
 		ctx.Reply(fmt.Sprintf("error while retrieving sidearm weapon: %v", err))
 		return
-	} else {
-		fmt.Fprintf(&reply, "Sidearm: %v", weapName)
 	}
+	fmt.Fprintf(&reply, "Sidearm: %v", weapName)
 	ctx.Reply(reply.String())
 }
 
