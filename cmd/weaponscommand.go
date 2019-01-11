@@ -34,25 +34,41 @@ func WeaponsCommand(ctx framework.Context) {
 	weapons := framework.Weapons
 	var reply strings.Builder
 
-	weapon, _ := framework.GenerateRandomWeaponOnce(weapons, framework.Primary, reserve, inventoryCap)
-	switch inventoryCap {
-	case 10:
-		// generate one primary and one sidearm
-		fmt.Fprintf(&reply, "Primary: %s\n", weapon.Name)
-		inventoryCap -= weapon.Weight
-
-		weapon, _ = framework.GenerateRandomWeaponOnce(weapons, framework.Sidearm, reserve, inventoryCap)
-		fmt.Fprintf(&reply, "Sidearm: %s\n", weapon.Name)
-	case 20:
-		fmt.Fprintf(&reply, "Primary: %s\n", weapon.Name)
-		inventoryCap -= weapon.Weight
-
-		weapon, _ = framework.GenerateRandomWeaponOnce(weapons, framework.Primary, reserve, inventoryCap)
-		fmt.Fprintf(&reply, "Secondary: %s\n", weapon.Name)
-		inventoryCap -= weapon.Weight
-
-		weapon, _ = framework.GenerateRandomWeaponOnce(weapons, framework.Sidearm, reserve, inventoryCap)
-		fmt.Fprintf(&reply, "Sidearm: %s\n", weapon.Name)
+	weapName, err := getRandomWeapon(weapons, framework.Primary, reserve, &inventoryCap)
+	if err != nil {
+		ctx.Reply(fmt.Sprintf("error while retrieving primary weapon: %v", err))
+		return
+	} else {
+		fmt.Fprintf(&reply, "Primary: %v\n", weapName)
+	}
+	// when the inventoryCap is 20, generate second primary
+	if inventoryCap > 10.0 {
+		weapName, err = getRandomWeapon(weapons, framework.Primary, reserve, &inventoryCap)
+		if err != nil {
+			ctx.Reply(fmt.Sprintf("error while retrieving second primary weapon: %v", err))
+			return
+		} else {
+			fmt.Fprintf(&reply, "Second primary: %v\n", weapName)
+		}
+	}
+	weapName, err = getRandomWeapon(weapons, framework.Sidearm, reserve, &inventoryCap)
+	if err != nil {
+		ctx.Reply(fmt.Sprintf("error while retrieving sidearm weapon: %v", err))
+		return
+	} else {
+		fmt.Fprintf(&reply, "Sidearm: %v", weapName)
 	}
 	ctx.Reply(reply.String())
+}
+
+//
+// getRandomWeapon acts as a local wrapper for framework.GenerateRandomWeaponOnce
+//
+func getRandomWeapon(weapons []framework.Weapon, weaptype string, reserve framework.Reserve, inventoryCap *float64) (string, error) {
+	weapon, err := framework.GenerateRandomWeaponOnce(weapons, weaptype, reserve, *inventoryCap)
+	if err != nil {
+		return "", err
+	}
+	*inventoryCap -= weapon.Weight
+	return weapon.Name, nil
 }
