@@ -16,3 +16,6 @@ main
 framework/data_v2.go
 data/sql/
 data/xml/
+
+# database
+*.db
