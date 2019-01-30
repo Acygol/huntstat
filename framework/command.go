@@ -2,7 +2,10 @@ package framework
 
 import (
 	"fmt"
+	"log"
 	"strings"
+
+	"github.com/bwmarrin/discordgo"
 )
 
 type (
@@ -16,6 +19,7 @@ type (
 		CmdDesc   string
 		CmdSyntax string
 		aliases   []string
+		Flags     []string
 	}
 
 	//
@@ -173,4 +177,45 @@ func (command Command) ValidateArgs(ctx Context) bool {
 		return false
 	}
 	return true
+}
+
+//
+// IsAdministrator validates whether the given discord user has
+// administrator permissions
+//
+func IsAdministrator(sess *discordgo.Session, guild *discordgo.Guild, user *discordgo.User) bool {
+	member, err := sess.GuildMember(guild.ID, user.ID)
+	if err != nil {
+		log.Println("error getting user as member,", err)
+		return false
+	}
+	for _, role := range guild.Roles {
+		for _, memberRole := range member.Roles {
+			if memberRole == role.ID && (role.Permissions&discordgo.PermissionAdministrator) != 0 {
+				return true
+			}
+		}
+	}
+	return false
+}
+
+//
+// IsDiscordMention ...
+//
+func IsDiscordMention(mention string) bool {
+	return strings.HasPrefix(mention, "<@")
+}
+
+//
+// GetIDFromMention ...
+//
+func GetIDFromMention(mention string) (ID string) {
+	prefix := "<@"
+	suffix := ">"
+	if strings.Contains(mention, "!") {
+		prefix += "!"
+	}
+	ID = strings.TrimPrefix(mention, prefix)
+	ID = strings.TrimSuffix(ID, suffix)
+	return
 }

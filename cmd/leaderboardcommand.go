@@ -3,6 +3,7 @@ package cmd
 import (
 	"fmt"
 	"io/ioutil"
+	"log"
 	"net/http"
 	"regexp"
 	"strconv"
@@ -40,19 +41,6 @@ func LeaderboardCommand(ctx framework.Context) {
 	regex := regexp.MustCompile(`(<!--.(?P<score>[0-9.]+).(?P<harvested>[0-9]+).(?P<scoresheet>[0-9]+).-->)`)
 
 	//
-	// Query the database to retrieve the hunter names of
-	// all registered community members within the server
-	// in which the command was executed
-	//
-	rows, err := ctx.Conf.Database.Handle.Query("SELECT hunter_name FROM users WHERE guild_id = ?", ctx.Guild.ID)
-	if err != nil {
-		ctx.Reply("Unable to retrieve from database, contact the maintainer of this bot for more information.")
-		fmt.Println("erro retrieving from database,", err)
-		return
-	}
-	defer rows.Close()
-
-	//
 	// For each member in the community, process their widget
 	// and compare each score against that of its corresponding
 	// record. The HTML is scraped exactly $x$ amount of times
@@ -62,20 +50,27 @@ func LeaderboardCommand(ctx framework.Context) {
 	// being scraped more than it should; $x * len(ANIMALS)$
 	// times as opposed to just $x$ times.
 	//
-	for huntername := ""; rows.Next(); {
-		err := rows.Scan(&huntername)
-		if err != nil {
-			fmt.Println("error while scanning the next row,", err)
-			break
-		}
+	usersInGuild := framework.GetUsersInGuild(ctx.Guild.ID)
+	for _, user := range usersInGuild {
+		log.Printf("[Leaderboard] User: %v\n", user)
+		hunterName := user.HunterName()
+		log.Printf("hunterName: %s\n", hunterName)
 
 		//
 		// Get the widget's page, read its HTML
 		// and then stringify it such that it becomes
 		// easier to use in finding all regex matches
 		//
-		resp, _ := http.Get(GetURL(huntername, WidgetURL))
-		retbody, _ := ioutil.ReadAll(resp.Body)
+		resp, err := http.Get(GetURL(hunterName, WidgetURL))
+		if err != nil {
+			log.Println("error while retrieving HTML page,", err)
+			return
+		}
+		retbody, err := ioutil.ReadAll(resp.Body)
+		if err != nil {
+			log.Println("error while reading HTML page,", err)
+			return
+		}
 		body := string(retbody)
 
 		//
@@ -139,7 +134,7 @@ func LeaderboardCommand(ctx framework.Context) {
 			//
 			if score > records[i].Score {
 				records[i].Score = score
-				records[i].Holder = huntername
+				records[i].Holder = hunterName
 				records[i].Scoresheet = result[i]["scoresheet"]
 			}
 		}
