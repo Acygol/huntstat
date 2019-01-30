@@ -117,8 +117,8 @@ func loadWeapons() {
 	// Ammo types loaded from the JSON must be converted
 	// to their datatype representation
 	//
-	var ammotypes []AmmoType
 	for _, tmpw := range weap {
+		var ammotypes []AmmoType
 		for _, ammoTypeName := range tmpw.Ammo {
 			for _, ammoType := range AmmoTypes {
 				if strings.Compare(ammoType.Name, ammoTypeName) == 0 {
@@ -153,9 +153,9 @@ func loadAnimals() {
 		log.Fatal("error loading animals.json,", err)
 	}
 
-	var ammotypes []AmmoType
-	var reserves []Reserve
 	for _, tmpa := range tmpanimals {
+		var ammotypes []AmmoType
+		var reserves []Reserve
 		//
 		// Ammo types loaded from the JSON must be converted
 		// to their datatype representation
@@ -323,4 +323,19 @@ func IsValidAnimalName(name string) bool {
 		}
 	}
 	return false
+}
+
+//
+// GetAnimalsOnReserve ...
+//
+func GetAnimalsOnReserve(reserve Reserve) (animals []Animal) {
+	for _, animal := range Animals {
+		for _, rv := range animal.Reserves {
+			if rv.Name == reserve.Name {
+				animals = append(animals, animal)
+				break
+			}
+		}
+	}
+	return
 }
