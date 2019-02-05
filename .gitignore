@@ -10,4 +10,12 @@ Doc.jpg
 
 # Compiled executables
 *.exe
-main
+huntstat
+
+# unused files
+framework/data_v2.go
+data/sql/
+data/xml/
+
+# database
+*.db

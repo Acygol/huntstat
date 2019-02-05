@@ -11,14 +11,13 @@ import (
 // and registers a discord user to a community
 //
 func RegisterCommand(ctx framework.Context) {
-	if len(ctx.Args) < 2 {
-		ctx.Reply("Invalid syntax: s!register <@user> <hunter_name>")
+	if !ctx.CmdHandler.MustGet(ctx.CmdName).ValidateArgs(ctx) {
 		return
 	}
 
-	// it's an invalid mention
+	// args[0] must be a discord mention:
 	if !framework.IsDiscordMention(ctx.Args[0]) {
-		ctx.Reply("Invalid user")
+		ctx.Reply("Invalid discord user. Are you mentioning them (@user)?")
 		return
 	}
 
@@ -26,11 +25,10 @@ func RegisterCommand(ctx framework.Context) {
 		TODO: validate hunter profile, widget page returns 'invalid user' as body text
 	*/
 
-	// adds a new user to the database
-	err := framework.NewUser(ctx, ctx.Guild.ID, ctx.Args[0], ctx.Args[1])
+	_, err := framework.NewUser(ctx, framework.GetIDFromMention(ctx.Args[0]), ctx.Args[1])
 	if err != nil {
-		ctx.Reply("Failed to register new user. Contact the bot maintainer for more information")
-		fmt.Println("Failed to register new user (", ctx.Guild.ID, ctx.Args[0], ctx.Args[1], "),", err)
+		ctx.Reply("Failed to register user. Contact the bot maintainer for more information")
+		fmt.Println("Failed to register user (", ctx.Guild.ID, ctx.Args[0], ctx.Args[1], "),", err)
 		return
 	}
 	ctx.Reply("User " + ctx.Args[0] + " registered as " + ctx.Args[1])

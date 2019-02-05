@@ -1,7 +1,9 @@
 package main
 
 import (
+	"flag"
 	"fmt"
+	"log"
 	"os"
 	"os/signal"
 	"strings"
@@ -22,8 +24,16 @@ func main() {
 	// load theHunter data
 	framework.LoadGameData()
 
+	// flags
+	initDatabase := flag.Bool("init", false, "create required tables")
+	flag.Parse()
+	log.Printf("initDatabase: %v\n", *initDatabase)
+
 	// load config
-	config = framework.NewConfig()
+	config = framework.NewConfig(*initDatabase)
+
+	// load users
+	framework.LoadUsers(*config)
 
 	// establish a command handler
 	cmdHandler = framework.NewCommandHandler()
@@ -114,6 +124,7 @@ func commandHandler(sess *discordgo.Session, msg *discordgo.MessageCreate) {
 		return
 	}
 	ctx := framework.NewContext(sess, guild, channel, user, msg, config, cmdHandler)
+	ctx.CmdName = name
 	ctx.Args = args[1:]
 
 	c := command.CmdFunc
@@ -137,12 +148,14 @@ func registerCommands() {
 
 	command = cmdHandler.Register("weapon", cmd.WeaponsCommand)
 	command.Description("Generates a random weapon loadout to hunt with")
+	command.Syntax("<reserve> <max inventory capacity>")
 	command.RegisterAlias("weapons")
 	command.RegisterAlias("gun")
 	command.RegisterAlias("guns")
 
 	command = cmdHandler.Register("animal", cmd.AnimalsCommand)
-	command.Description("Generates a random weapon loadout to hunt with")
+	command.Description("Generates a random animal to hunt on")
+	command.Syntax("<(optional) reserve>")
 	command.RegisterAlias("animals")
 
 	command = cmdHandler.Register("modifier", cmd.ModifierCommand)
@@ -159,7 +172,11 @@ func registerCommands() {
 	command = cmdHandler.Register("register", cmd.RegisterCommand)
 	command.Description("registers a user to the community")
 	command.Syntax("<@user> <hunter name>")
-	command.RegisterAlias("unregister")
+	command.RegisterAlias("add")
+
+	command = cmdHandler.Register("unregister", cmd.DeleteCommand)
+	command.Description("removes a user from the community")
+	command.Syntax("<@user>")
 	command.RegisterAlias("delete")
 	command.RegisterAlias("remove")
 
@@ -185,4 +202,12 @@ func registerCommands() {
 	command.Description("generates a leaderboard for the community")
 	command.Syntax("<(optional) animal name>")
 	command.RegisterAlias("leaderboards")
+
+	//
+	// debug
+	//
+	/*
+		command = cmdHandler.Register("inmemory", cmd.UsersInMemory)
+		command.Description("debug")
+	*/
 }

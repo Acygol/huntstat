@@ -1,7 +1,6 @@
 package cmd
 
 import (
-	"database/sql"
 	"fmt"
 	"strings"
 
@@ -44,8 +43,7 @@ const (
 // UhcCommand is executed when someone calls 's!uhc'
 //
 func UhcCommand(ctx framework.Context) {
-	if len(ctx.Args) < 1 {
-		ctx.Reply("Invalid syntax: s!uhc <@user | all>")
+	if !ctx.CmdHandler.MustGet(ctx.CmdName).ValidateArgs(ctx) {
 		return
 	}
 	processProfileQuery(ctx, UhcURL)
@@ -55,8 +53,7 @@ func UhcCommand(ctx framework.Context) {
 // ProfileCommand is executed when someone calls 's!profile'
 //
 func ProfileCommand(ctx framework.Context) {
-	if len(ctx.Args) < 1 {
-		ctx.Reply("Invalid syntax: s!profile <@user | all>")
+	if !ctx.CmdHandler.MustGet(ctx.CmdName).ValidateArgs(ctx) {
 		return
 	}
 	processProfileQuery(ctx, ProfileURL)
@@ -66,45 +63,27 @@ func ProfileCommand(ctx framework.Context) {
 // WidgetCommand is executed when someone calls 's!widget'
 //
 func WidgetCommand(ctx framework.Context) {
-	if len(ctx.Args) < 1 {
-		ctx.Reply("Invalid syntax: s!widget <@user | all>")
+	if !ctx.CmdHandler.MustGet(ctx.CmdName).ValidateArgs(ctx) {
 		return
 	}
 	processProfileQuery(ctx, WidgetURL)
 }
 
 func processProfileQuery(ctx framework.Context, whichprofile int) {
-	var huntername string
 	var reply strings.Builder
+
 	if framework.IsDiscordMention(ctx.Args[0]) {
-		// Mentions that start with '<@' are valid server members
-		err := ctx.Conf.Database.Handle.QueryRow("SELECT hunter_name FROM users WHERE discord_id = ? AND guild_id = ?", ctx.Args[0], ctx.Guild.ID).Scan(&huntername)
-		if err != nil {
-			if err == sql.ErrNoRows {
-				ctx.Reply("User isn't registered")
-			} else {
-				ctx.Reply("Unable to retrieve from database, contact the maintainer of this bot for more information")
-			}
-			fmt.Println("error retrieving from database,", err)
+		user, err := framework.GetUserFromDiscordID(framework.GetIDFromMention(ctx.Args[0]))
+		if err != nil || !user.IsInGuild(ctx.Guild.ID) {
+			ctx.Reply("User is not registered")
 			return
 		}
 		fmt.Fprintf(&reply, "%s for %s\n", getURLHeader(whichprofile), ctx.Args[0])
-		fmt.Fprintf(&reply, GetURL(huntername, whichprofile))
+		fmt.Fprintf(&reply, "<%s>\n", GetURL(user.HunterName(), whichprofile))
 	} else if strings.EqualFold(ctx.Args[0], "all") {
-		rows, err := ctx.Conf.Database.Handle.Query("SELECT hunter_name FROM users WHERE guild_id = ?", ctx.Guild.ID)
-		if err != nil {
-			ctx.Reply("Unable to retrieve from database, contact the maintainer of this bot for more information")
-			fmt.Println("error retrieving from database,", err)
-			return
-		}
-		defer rows.Close()
-		for rows.Next() {
-			err := rows.Scan(&huntername)
-			if err != nil {
-				fmt.Println("Error attempting to scan the next row,", err)
-				break
-			}
-			fmt.Fprintf(&reply, "%s\n", GetURL(huntername, whichprofile))
+		users := framework.GetUsersInGuild(ctx.Guild.ID)
+		for _, user := range users {
+			fmt.Fprintf(&reply, "<%s>\n", GetURL(user.HunterName(), whichprofile))
 		}
 	} else {
 		fmt.Fprintln(&reply, "Invalid user")
@@ -120,11 +99,11 @@ func processProfileQuery(ctx framework.Context, whichprofile int) {
 func GetURL(huntername string, whichprofile int) string {
 	switch whichprofile {
 	case UhcURL:
-		return fmt.Sprintf("<https://www.uhcapps.co.uk/stats.php?username=%s>", huntername)
+		return fmt.Sprintf("https://www.uhcapps.co.uk/stats.php?username=%s", huntername)
 	case ProfileURL:
-		return fmt.Sprintf("<https://www.thehunter.com/#profile/%s/>", huntername)
+		return fmt.Sprintf("https://www.thehunter.com/#profile/%s/", huntername)
 	}
-	return fmt.Sprintf("<http://widget.thehunter.com/signature/?user=%s>", huntername)
+	return fmt.Sprintf("http://widget.thehunter.com/signature/?user=%s", huntername)
 }
 
 func getURLHeader(whichprofile int) string {

@@ -1,0 +1,622 @@
+[
+    { 
+        "name": "8x57 IS Anschütz 1780 D FL Bolt Action Rifle",
+        "editions": [
+            "Holidays 2018",
+            "SOFT-Grip Wood Orange"
+        ],
+        "type": "primary",
+        "ammo": [
+            "8x57 IS Nosler Partition"
+        ],
+        "weight": 4
+    },
+    { 
+        "name": ".30 R O/U Break Action Rifle",
+        "editions": [
+            "engraved",
+            "wood"
+        ],
+        "type": "primary",
+        "ammo": [
+            ".30 R Ammunition"
+        ],
+        "weight": 4
+    },
+    {
+        "name": "7x64mm Bolt Action Rifle",
+        "editions": ["wood"],
+        "type": "primary",
+        "ammo": [
+            "7x64mm Ammunition"
+        ],
+        "weight": 4
+    },
+    { 
+        "name": "9.3x74R O/U Break Action Rifle",
+        "editions": ["standard"],
+        "type": "primary",
+        "ammo": [
+            "9.3x74R Ammunition"
+        ],
+        "weight": 4
+    },
+    { 
+        "name": ".405 Lever Action Rifle",
+        "edition": ["standard"],
+        "type": "primary",
+        "ammo": [
+            ".405 Ammunition"
+        ],
+        "weight": 4
+    },
+    { 
+        "name": ".30-06 Stutzen Bolt Action Rifle",
+        "edition": ["classic"],
+        "type": "primary",
+        "ammo": [
+            ".30-06 Nosler Partition"
+        ],
+        "weight": 4
+    },
+    { 
+        "name": "6.5x55 Bolt Action Rifle",
+        "edition": ["panther"],
+        "type": "primary",
+        "ammo": [
+            "6.5x55 Nosler AccuBond"
+        ],
+        "weight": 3.25
+    },
+    { 
+        "name": ".17 HMR Lever Action Rifle",
+        "edition": ["standard"],
+        "type": "primary",
+        "ammo": [
+            ".17 HMR",
+            ".17 HMR HV"
+        ],
+        "weight": 3
+    },
+    { 
+        "name": ".270 Bolt Action Rifle",
+        "edition": [
+            "grey wolf",
+            "wood"
+        ],
+        "type": "primary",
+        "ammo": [
+            ".270 Nosler Ballistic Tip"
+        ],
+        "weight": 3.5
+    },
+    { 
+        "name": ".308 Bolt Action Rifle",
+        "edition": [
+            "carbon",
+            "engraved"
+        ],
+        "type": "primary",
+        "ammo": [
+            ".308 Nosler Partition"
+        ],
+        "weight": 4
+    },
+    { 
+        "name": ".223 Semi-Automatic Rifle",
+        "edition": ["forest camo"],
+        "type": "primary",
+        "ammo": [
+            ".223 Nosler Ballistic Tip"
+        ],
+        "weight": 3.5
+    },
+    { 
+        "name": ".30-06 Lever Action Rifle",
+        "edition": [
+            "forest camo",
+            "wood"
+        ],
+        "type": "primary",
+        "ammo": [
+            ".30-06 Round Nose Ammunition"
+        ],
+        "weight": 4
+    },
+    { 
+        "name": ".340 Weatherby Magnum Bolt Action Rifle",
+        "edition": ["wood"],
+        "type": "primary",
+        "ammo": [
+            ".340 Weatherby Magnum Ammunition"
+        ],
+        "weight": 4.5
+    },
+    { 
+        "name": ".243 Bolt Action Rifle",
+        "edition": [
+            "carbon",
+            "wood"
+        ],
+        "type": "primary",
+        "ammo": [
+            ".243 Nosler Ballistic Tip"
+        ],
+        "weight": 3
+    },
+    { 
+        "name": ".30-06 Bolt Action Rifle",
+        "edition": ["classic"],
+        "type": "primary",
+        "ammo": [
+            ".30-06 Nosler Partition"
+        ],
+        "weight": 4
+    },
+    { 
+        "name": ".22 'Plinkington' Semi-Automatic Rifle",
+        "edition": [
+            "wood",
+            "blue marble"
+        ],
+        "type": "primary",
+        "ammo": [
+            ".22 LR Ammunition"
+        ],
+        "weight": 3
+    },
+    { 
+        "name": ".45-70 Buffalo Rifle",
+        "edition": ["classic"],
+        "type": "primary",
+        "ammo": [
+            ".45-70 Government"
+        ],
+        "weight": 4.5
+    },
+    { 
+        "name": "7.62x54R Bolt Action Rifle",
+        "edition": ["classic"],
+        "type": "primary",
+        "ammo": [
+            "7.62x54R SP Ammunition"
+        ],
+        "weight": 4
+    },
+    { 
+        "name": ".300 Bolt Action Rifle",
+        "edition": [
+            "winter camo",
+            "carbon",
+            "composite"
+        ],
+        "type": "primary",
+        "ammo": [
+            ".300 Nosler AccuBond"
+        ],
+        "weight": 4
+    },
+    { 
+        "name": ".45-70 Government Lever Action Rifle",
+        "edition": [
+            "engraved",
+            "laminated wood"
+        ],
+        "type": "primary",
+        "ammo": [
+            ".45-70 Government"
+        ],
+        "weight": 4.5
+    },
+    { 
+        "name": "7mm Magnum Break Action Rifle",
+        "edition": [
+            "bouquetin",
+            "stambecco"
+        ],
+        "type": "primary",
+        "ammo": [
+            "7mm Magnum"
+        ],
+        "weight": 3
+    },
+    { 
+        "name": ".303 British Bolt Action Rifle",
+        "edition": ["classic"],
+        "type": "primary",
+        "ammo": [
+            ".303 British Ammunition"
+        ],
+        "weight": 4
+    },
+    { 
+        "name": ".30-30 Lever Action Rifle",
+        "edition": [
+            "lone star",
+            "liberator"
+        ],
+        "type": "primary",
+        "ammo": [
+            ".30-30 Nosler Partition"
+        ],
+        "weight": 3.5
+    },
+    { 
+        "name": "7mm Magnum Bullpup Rifle",
+        "edition": ["raptor"],
+        "type": "primary",
+        "ammo": [
+            "7mm Magnum"
+        ],
+        "weight": 3
+    },
+    { 
+        "name": ".22 Air Rifle",
+        "edition": ["huginn"],
+        "type": "primary",
+        "ammo": [
+            ".22 Air Rifle Pellet"
+        ],
+        "weight": 3
+    },
+    { 
+        "name": "8x57 IS K98k Bolt Action Rifle",
+        "edition": ["classic"],
+        "type": "primary",
+        "ammo": [
+            "8x57 IS Nosler Partition"
+        ],
+        "weight": 4
+    },
+    { 
+        "name": "6.5x55 Blaser R8 Bolt Action Rifle",
+        "edition": ["standard"],
+        "type": "primary",
+        "ammo": [
+            "6.5x55 Nosler AccuBond"
+        ],
+        "weight": 3.5
+    },
+    { 
+        "name": ".223 Bolt Action Rifle",
+        "edition": ["wood"],
+        "type": "primary",
+        "ammo": [
+            ".223 Nosler Ballistic Tip"
+        ],
+        "weight": 3
+    },
+    { 
+        "name": "9.3x62 Anschütz 1780 D FL Bolt Action Rifle",
+        "edition": [
+            "SOFT-grip wood green",
+            "engraved"
+        ],
+        "type": "primary",
+        "ammo": [
+            "9.3x62 Nosler Partition"
+        ],
+        "weight": 4.5
+    },
+    { 
+        "name": ".308 Anschütz 1780 D FL Bolt Action Rifle",
+        "edition": ["heartwood"],
+        "type": "primary",
+        "ammo": [
+            ".308 Nosler Partition"
+        ],
+        "weight": 4
+    },
+    { 
+        "name": "10mm Semi-Automatic Pistol",
+        "edition": ["black"],
+        "type": "sidearm",
+        "ammo": [
+            "10mm Auto Ammunition"
+        ],
+        "weight": 1.5
+    },
+    { 
+        "name": ".45 Long Colt Revolver",
+        "edition": [
+            "the stallion",
+            "the mule"
+        ],
+        "type": "sidearm",
+        "ammo": [
+            ".45 Long Colt Handgun"
+        ],
+        "weight": 1.5
+    },
+    { 
+        "name": ".454 Revolver",
+        "edition": [
+            "el bisonte",
+            "el toro"
+        ],
+        "type": "sidearm",
+        "ammo": [
+            ".454 Nosler Custom Handgun"
+        ],
+        "weight": 1.5
+    },
+    { 
+        "name": ".22 Pistol",
+        "edition": ["grasshopper"],
+        "type": "sidearm",
+        "ammo": [
+            ".22 LR Ammunition"
+        ],
+        "weight": 1
+    },
+    { 
+        "name": ".308 handgun",
+        "edition": [
+            "engraved",
+            "black"
+        ],
+        "type": "sidearm",
+        "ammo": [
+            ".308 Nosler Partition"
+        ],
+        "weight": 1.5
+    },
+    { 
+        "name": ".44 Magnum Revolver",
+        "edition": [
+            "custom",
+            "silver"
+        ],
+        "type": "sidearm",
+        "ammo": [
+            ".44 Nosler Sporting Handgun"
+        ],
+        "weight": 1.25
+    },
+    { 
+        "name": ".357 Revolver",
+        "edition": ["black"],
+        "type": "sidearm",
+        "ammo": [
+            ".357 Nosler Sporting Handgun"
+        ],
+        "weight": 1
+    },
+    { 
+        "name": "10 GA Lever Action Shotgun",
+        "edition": ["standard"],
+        "type": "primary",
+        "ammo": [
+            "10 GA Birdshot Shells",
+            "10 GA Buckshot Shells",
+            "10 GA Slug Shells"
+        ],
+        "weight": 3.5
+    },
+    { 
+        "name": "16 GA Side By Side Shotgun",
+        "edition": ["standard"],
+        "type": "primary",
+        "ammo": [
+            "16 GA Birdshot Shells",
+            "16 GA Buckshot Shells"
+        ],
+        "weight": 3.5
+    },
+    { 
+        "name": "20 GA Semi-Automatic Shotgun",
+        "edition": [
+            "carbon",
+            "swamp camo"
+        ],
+        "type": "primary",
+        "ammo": [
+            "20 GA Birdshot Shells"
+        ],
+        "weight": 3.5
+    },
+    { 
+        "name": "12 GA Single Shot Shotgun",
+        "edition": ["wood"],
+        "type": "primary",
+        "ammo": [
+            "12 GA Birdshot Shells",
+            "12 GA Buckshots Shells",
+            "12 GA Slug Shells"
+        ],
+        "weight": 3
+    },
+    { 
+        "name": "12 GA Blaser F3 Game O/U Shotgun",
+        "edition": [
+            "custom grade v",
+            "standard"
+        ],
+        "type": "primary",
+        "ammo": [
+            "12 GA Birdshot Shells",
+            "12 GA Buckshots Shells",
+            "12 GA Slug Shells"
+        ],
+        "weight": 3.5
+    },
+    { 
+        "name": "12 GA Side by Side Shotgun",
+        "edition": [
+            "engraved",
+            "wood"
+        ],
+        "type": "primary",
+        "ammo": [
+            "12 GA Birdshot Shells",
+            "12 GA Buckshots Shells",
+            "12 GA Slug Shells"
+        ],
+        "weight": 3.5
+    },
+    { 
+        "name": "Crossbow Pistol",
+        "edition": ["standard"],
+        "type": "sidearm",
+        "ammo": [
+            "Crossbow Bolts"
+        ],
+        "weight": 1.25
+    },
+    { 
+        "name": "Cable-backed bow",
+        "edition": ["traditional"],
+        "type": "primary",
+        "ammo": [
+            "Cable-backed Bow Arrows"
+        ],
+        "weight": 1.5
+    },
+    {
+        "name": "Compound Bow 'Pulsar'",
+        "edition": [
+            "forest camo",
+            "winter camo",
+            "black"
+        ],
+        "type": "primary",
+        "ammo": [
+            "Compound Arrows",
+            "Compound Tracer Arrows"
+        ],
+        "weight": 1.5
+    },
+    { 
+        "name": "Reverse Draw Crossbow",
+        "edition": [
+            "winter camo",
+            "forest camo",
+            "black"
+        ],
+        "type": "primary",
+        "ammo": [
+            "Crossbow Arrows",
+            "Crossbow Tracer Arrows"
+        ],
+        "weight": 2.25
+    },
+    { 
+        "name": "Recurve Bow",
+        "edition": [
+            "carbon",
+            "modern"
+        ],
+        "type": "primary",
+        "ammo": [
+            "Cupid Arrows",
+            "Recurve Arrows",
+            "Recurve Tracer Arrows"
+        ],
+        "weight": 1.5
+    },
+    {
+        "name": "Longbow",
+        "edition": ["classic"],
+        "type": "primary",
+        "ammo": [
+            "Longbow Arrows"
+        ],
+        "weight": 1.5
+    },
+    {
+        "name": "Heavy Recurve Bow",
+        "edition": ["InstinctiveArcher"],
+        "type": "primary",
+        "ammo": [
+            "Recurve Arrows",
+            "Recurve Tracer Arrows"
+        ],
+        "weight": 1.5
+    },
+    {
+        "name": "Compound Bow 'Parker Python'",
+        "edition": ["camo"],
+        "type": "primary",
+        "ammo": [
+            "Compound Arrows",
+            "Compound Tracer Arrows",
+            "Cupid Arrows"
+        ],
+        "weight": 1.5
+    },
+    {
+        "name": "Tenpoint Carbon Fusion Crossbow",
+        "edition": ["camo"],
+        "type": "primary",
+        "ammo": [
+            "Crossbow Arrows",
+            "Crossbow Tracer Arrows"
+        ],
+        "weight": 2.5
+    },
+    { 
+        "name": "Compound Bow 'Snakebite'",
+        "edition": ["forest camo"],
+        "type": "primary",
+        "ammo": [
+            "Compound Arrows",
+            "Compound Tracer Arrows",
+            "Cupid Arrows"
+        ],
+        "weight": 2
+    },
+    { 
+        "name": ".50 Inline Muzzleloader",
+        "edition": ["forest green"],
+        "type": "primary",
+        "ammo": [
+            ".45 Saboted Bullet",
+            ".50 Conical Bullet"
+        ],
+        "weight": 3.5
+    },
+    { 
+        "name": ".50 Cap Lock Muzzleloader",
+        "edition": ["classic"],
+        "type": "primary",
+        "ammo": [
+            ".50 Patched Round Ball"
+        ],
+        "weight": 3.5
+    },
+    { 
+        "name": ".50 Inline Muzzleloading Pistol",
+        "edition": ["silver"],
+        "type": "sidearm",
+        "ammo": [
+            ".45 Copper Bullet",
+            ".50 Lead Bullet"
+        ],
+        "weight": 1.5
+    },
+    { 
+        "name": "7mm-08 Scout Bolt Action Rifle",
+        "edition": [
+            "standard",
+            "elite"
+        ],
+        "type": "primary",
+        "ammo": [
+            "7mm-08 Ammunition (HP)",
+            "7mm-08 Ammunition (HV)"
+        ],
+        "weight": 3
+    },
+    { 
+        "name": "16GA/9.3x74R Drilling Combination Gun",
+        "edition": ["elegant wood"],
+        "type": "primary",
+        "ammo": [
+            "9.3x74R Ammunition",
+            "16 GA Birdshot Shells",
+            "16 GA Buckshot Shells",
+            "16 GA Slug Shells"
+        ],
+        "weight": 5
+    }
+]

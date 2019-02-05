@@ -13,5 +13,5 @@ import (
 func ReservesCommand(ctx framework.Context) {
 	rand.Seed(time.Now().UnixNano())
 
-	ctx.Reply(framework.Reserves[rand.Intn(len(framework.Reserves))])
+	ctx.Reply(framework.Reserves[rand.Intn(len(framework.Reserves))].Name)
 }

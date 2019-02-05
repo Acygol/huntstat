@@ -22,6 +22,7 @@ type Context struct {
 	TextChannel *discordgo.Channel
 	User        *discordgo.User
 	Message     *discordgo.MessageCreate
+	CmdName     string
 	Args        []string
 
 	Conf       *Config

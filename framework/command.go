@@ -1,6 +1,12 @@
 package framework
 
-import "strings"
+import (
+	"fmt"
+	"log"
+	"strings"
+
+	"github.com/bwmarrin/discordgo"
+)
 
 type (
 	//
@@ -13,6 +19,7 @@ type (
 		CmdDesc   string
 		CmdSyntax string
 		aliases   []string
+		Flags     []string
 	}
 
 	//
@@ -78,6 +85,20 @@ func (handler CommandHandler) Get(name string) (*Command, bool) {
 }
 
 //
+// MustGet is a wrapper around CommandHandler.Get() that panics
+// when it cannot find the given command. This method should only
+// be used when you are certain that the command exists. When
+// used properly, it allows for method chaining
+//
+func (handler CommandHandler) MustGet(name string) *Command {
+	cmd, found := handler.Get(name)
+	if !found {
+		panic(`CommandHandler: MustGet(` + name + `): command not found`)
+	}
+	return cmd
+}
+
+//
 // Register adds a new command function and its stringified name
 // to the given CommandHandler.
 //
@@ -120,17 +141,81 @@ func (command *Command) Syntax(syntax string) {
 // GetArgsCount returns the number of arguments the command
 // expects
 //
-/*
 func (command Command) GetArgsCount() int {
 	var args []string
 
 	// exclude optional arguments
 	for _, arg := range strings.Split(command.CmdSyntax, "<") {
-		if !strings.Contains(arg, "optional") {
+		if !strings.Contains(arg, "optional") && len(arg) > 0 {
 			args = append(args, arg)
 		}
 	}
-
 	return len(args)
 }
+
+/*
+func (command Command) HasOnlyOptionalArgs() bool {
+	for _, arg := range strings.Split(command.CmdSyntax, "<") {
+		if len(arg) < 1 {
+			continue
+		}
+		if !strings.Contains(arg, "optional") {
+			return false
+		}
+	}
+	return true
+}
 */
+
+//
+// ValidateArgs is a helper method to validate arguments
+// of a given command
+//
+func (command Command) ValidateArgs(ctx Context) bool {
+	if len(ctx.Args) < command.GetArgsCount() {
+		ctx.Reply(fmt.Sprintf("Invalid syntax: s!%s %s", ctx.CmdName, command.CmdSyntax))
+		return false
+	}
+	return true
+}
+
+//
+// IsAdministrator validates whether the given discord user has
+// administrator permissions
+//
+func IsAdministrator(sess *discordgo.Session, guild *discordgo.Guild, user *discordgo.User) bool {
+	member, err := sess.GuildMember(guild.ID, user.ID)
+	if err != nil {
+		log.Println("error getting user as member,", err)
+		return false
+	}
+	for _, role := range guild.Roles {
+		for _, memberRole := range member.Roles {
+			if memberRole == role.ID && (role.Permissions&discordgo.PermissionAdministrator) != 0 {
+				return true
+			}
+		}
+	}
+	return false
+}
+
+//
+// IsDiscordMention ...
+//
+func IsDiscordMention(mention string) bool {
+	return strings.HasPrefix(mention, "<@")
+}
+
+//
+// GetIDFromMention ...
+//
+func GetIDFromMention(mention string) (ID string) {
+	prefix := "<@"
+	suffix := ">"
+	if strings.Contains(mention, "!") {
+		prefix += "!"
+	}
+	ID = strings.TrimPrefix(mention, prefix)
+	ID = strings.TrimSuffix(ID, suffix)
+	return
+}
