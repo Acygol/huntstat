@@ -14,7 +14,7 @@ HuntStat is a Discord bot for TheHunter: Classic communities to automate their a
 4. Generate random hunt modifiers (candidate for change)
 5. Generate random weapon loadouts
 
-# How to works
+# How it works
 The bot's initial purpose was to replace an obscure randomizer for hunt modifiers (specific animal and weapon loadout to hunt with, etc). That purpose has been fulfilled with the following commands:
 
 1. `s!weapon <reserve> <inventory capacity>`: generates a weapon loadout consisting of 2 or 3 weapons depending on the inventory capacity. Each of the generated weapons can shoot at least 1 animal on the provided reserve. Example usage:
@@ -71,7 +71,7 @@ When building on windows, you must have a GCC compiler installed (i.e., [mingw_w
     "prefix": "s!"
 }
 ```
-Change `YOUR_BOT_TOKEN` with your bot toke which you can retrieve from the Discord's developers portal.
+Change `YOUR_BOT_TOKEN` with your bot token which you can retrieve from the Discord's developers portal.
 - Add the following to `database.json`:
 ```JSON
 {
