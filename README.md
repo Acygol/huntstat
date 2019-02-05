@@ -61,7 +61,24 @@ The bot generates a community leaderboard by scraping the widget page of all mem
 When building on windows, you must have a GCC compiler installed (i.e., [mingw_w64](https://mingw-w64.org))
 
 # Run HuntStat for the first time
-Use the `-init` flag to populate the database of the necessary tables:
+- Copy the folder `data/json` to your project directory
+- Create a folder and call it `config`
+- In the config folder, create two `.json` files: `config.json` and `database.json`
+- Add the following to `config.json`:
+```JSON
+{
+    "token": "YOUR_BOT_TOKEN",
+    "prefix": "s!"
+}
+```
+Change `YOUR_BOT_TOKEN` with your bot toke which you can retrieve from the Discord's developers portal.
+- Add the following to `database.json`:
+```JSON
+{
+    "database_file": "./<DATABASE_FILE_NAME>.db"
+}
+```
+Replace `DATABASE_FILE_NAME` with your desired file name.
 
 ## Linux
 ```bash
@@ -75,3 +92,5 @@ $ ./huntstat -init
 $ cd \path\to\project\root\
 $ .\huntstat.exe -init
 ```
+
+The `-init` flag populates the database of the necessary tables.
