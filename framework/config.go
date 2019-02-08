@@ -23,12 +23,17 @@ type Config struct {
 // connection. It then returns a pointer
 // to the newly created config
 //
-func NewConfig(initDatabase bool) *Config {
+func NewConfig() *Config {
 	var conf Config
 	if err := LoadFromJSON("config/config.json", &conf); err != nil {
 		log.Fatal("error loading config file,", err)
 		return nil
 	}
-	conf.Database = *NewDatabase(initDatabase)
+	db, err := NewDatabase()
+	if err != nil {
+		log.Fatal("error loading database,", err)
+		return nil
+	}
+	conf.Database = db
 	return &conf
 }

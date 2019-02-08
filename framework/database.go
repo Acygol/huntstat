@@ -2,7 +2,6 @@ package framework
 
 import (
 	"database/sql"
-	"fmt"
 	"log"
 
 	_ "github.com/mattn/go-sqlite3"
@@ -30,48 +29,41 @@ type (
 // NewDatabase loads credential information from config/database.json,
 // and opens a database connection through TCP
 //
-func NewDatabase(initDatabase bool) *Database {
+func NewDatabase() (Database, error) {
 	var config DbConfig
 	if err := LoadFromJSON("config/database.json", &config); err != nil {
-		fmt.Println("NewDatabase() loading the config file failed:", err)
-		return nil
+		return Database{}, err
 	}
 	database := new(Database)
 
 	db, err := sql.Open("sqlite3", config.DbFile)
 	if err != nil {
-		fmt.Println("NewDatabase() sql.Open() failed:", err)
-		return nil
+		return Database{}, err
 	}
 	if err = db.Ping(); err != nil {
-		fmt.Println("NewDatabase() db.Ping() failed:", err)
-		return nil
+		return Database{}, err
 	}
 
-	if initDatabase {
-		log.Println("initDatabase = True, creating tables...")
-		stmt := `CREATE TABLE user (
-			id INTEGER PRIMARY KEY AUTOINCREMENT,
-			discord_id TEXT NOT NULL,
-			hunter_name TEXT NOT NULL
-		);
+	stmt := `CREATE TABLE IF NOT EXISTS user (
+		id INTEGER PRIMARY KEY AUTOINCREMENT,
+		discord_id TEXT NOT NULL,
+		hunter_name TEXT NOT NULL
+	);
 
-		CREATE TABLE IF NOT EXISTS user_guilds (
-			user_id INTEGER NOT NULL,
-			guild_id TEXT NOT NULL,
-			PRIMARY KEY (user_id, guild_id),
-			FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE
-		);`
+	CREATE TABLE IF NOT EXISTS user_guilds (
+		user_id INTEGER NOT NULL,
+		guild_id TEXT NOT NULL,
+		PRIMARY KEY (user_id, guild_id),
+		FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE
+	);`
 
-		if _, err := db.Exec(stmt); err != nil {
-			log.Fatalf("%q: %s\n", err, stmt)
-			return nil
-		}
-		log.Println("tables created")
+	if _, err := db.Exec(stmt); err != nil {
+		log.Fatalf("%q: %s\n", err, stmt)
+		return Database{}, err
 	}
 
 	database.Handle = db
-	return database
+	return *database, nil
 }
 
 //

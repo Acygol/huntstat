@@ -84,13 +84,11 @@ Replace `DATABASE_FILE_NAME` with your desired file name.
 ```bash
 $ cd /path/to/project/root/
 $ chmod +x ./huntstat
-$ ./huntstat -init
+$ ./huntstat
 ```
 
 ## Windows
 ```powershell
 $ cd \path\to\project\root\
-$ .\huntstat.exe -init
+$ .\huntstat.exe
 ```
-
-The `-init` flag populates the database of the necessary tables.

@@ -1,7 +1,6 @@
 package main
 
 import (
-	"flag"
 	"fmt"
 	"log"
 	"os"
@@ -24,13 +23,12 @@ func main() {
 	// load theHunter data
 	framework.LoadGameData()
 
-	// flags
-	initDatabase := flag.Bool("init", false, "create required tables")
-	flag.Parse()
-	log.Printf("initDatabase: %v\n", *initDatabase)
-
 	// load config
-	config = framework.NewConfig(*initDatabase)
+	config = framework.NewConfig()
+	if config == nil {
+		log.Fatal("error loading config file")
+		return
+	}
 
 	// load users
 	framework.LoadUsers(*config)
