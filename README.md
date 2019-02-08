@@ -1,6 +1,8 @@
 # Summary
 HuntStat is a Discord bot for TheHunter: Classic communities to automate their administration.
 
+Invitation link: https://discordapp.com/oauth2/authorize?client_id=525617981703716883&scope=bot&permissions=8
+
 # Features
 1. (Un)register community members
 
