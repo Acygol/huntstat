@@ -22,7 +22,7 @@ type Context struct {
 	TextChannel *discordgo.Channel
 	User        *discordgo.User
 	Message     *discordgo.MessageCreate
-	CmdName     string
+	Cmd         *Command
 	Args        []string
 
 	Conf       *Config
@@ -34,7 +34,7 @@ type Context struct {
 // then returns a pointer to the new instance
 //
 func NewContext(discord *discordgo.Session, guild *discordgo.Guild, textChannel *discordgo.Channel, user *discordgo.User,
-	message *discordgo.MessageCreate, conf *Config, cmdHandler *CommandHandler) *Context {
+	message *discordgo.MessageCreate, conf *Config, cmdHandler *CommandHandler, cmd *Command, args []string) *Context {
 
 	ctx := new(Context)
 	ctx.Discord = discord
@@ -44,6 +44,8 @@ func NewContext(discord *discordgo.Session, guild *discordgo.Guild, textChannel 
 	ctx.Message = message
 	ctx.Conf = conf
 	ctx.CmdHandler = cmdHandler
+	ctx.Cmd = cmd
+	ctx.Args = args
 	return ctx
 }
 

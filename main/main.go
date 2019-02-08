@@ -53,8 +53,7 @@ func main() {
 	}
 	botID = usr.ID
 
-	// commandHandler is a callback for MessageCreate events
-	// it ought to handle commands
+	// commandHandler is a callback for MessageCreate events to handle commands
 	disc.AddHandler(commandHandler)
 	disc.AddHandler(func(discord *discordgo.Session, ready *discordgo.Ready) {
 		disc.UpdateStatus(0, "theHunter Classic")
@@ -123,9 +122,7 @@ func commandHandler(sess *discordgo.Session, msg *discordgo.MessageCreate) {
 		fmt.Println("Error while retrieving guild,", err)
 		return
 	}
-	ctx := framework.NewContext(sess, guild, channel, user, msg, config, cmdHandler)
-	ctx.CmdName = name
-	ctx.Args = args[1:]
+	ctx := framework.NewContext(sess, guild, channel, user, msg, config, cmdHandler, command, args[1:])
 
 	c := command.CmdFunc
 	c(*ctx)
@@ -202,12 +199,4 @@ func registerCommands() {
 	command.Description("generates a leaderboard for the community")
 	command.Syntax("<(optional) animal name>")
 	command.RegisterAlias("leaderboards")
-
-	//
-	// debug
-	//
-	/*
-		command = cmdHandler.Register("inmemory", cmd.UsersInMemory)
-		command.Description("debug")
-	*/
 }
