@@ -16,7 +16,8 @@ func DeleteCommand(ctx framework.Context) {
 		return
 	}
 
-	if !ctx.CmdHandler.MustGet(ctx.CmdName).ValidateArgs(ctx) {
+	if !ctx.Cmd.ValidateArgs(len(ctx.Args)) {
+		ctx.Reply(fmt.Sprintf("Invalid syntax: s!%s %s", ctx.Cmd.Name, ctx.Cmd.CmdSyntax))
 		return
 	}
 

@@ -13,7 +13,7 @@ import (
 // WeaponsCommand is executed when someone calls 's!weapon(s)'
 //
 func WeaponsCommand(ctx framework.Context) {
-	if !ctx.CmdHandler.MustGet(ctx.CmdName).ValidateArgs(ctx) {
+	if !ctx.Cmd.ValidateArgs(len(ctx.Args)) {
 		return
 	}
 

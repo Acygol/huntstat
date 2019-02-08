@@ -1,7 +1,6 @@
 package framework
 
 import (
-	"fmt"
 	"log"
 	"strings"
 
@@ -15,6 +14,7 @@ type (
 	// command
 	//
 	Command struct {
+		Name      string
 		CmdFunc   func(Context)
 		CmdDesc   string
 		CmdSyntax string
@@ -90,6 +90,7 @@ func (handler CommandHandler) Get(name string) (*Command, bool) {
 // be used when you are certain that the command exists. When
 // used properly, it allows for method chaining
 //
+/*
 func (handler CommandHandler) MustGet(name string) *Command {
 	cmd, found := handler.Get(name)
 	if !found {
@@ -97,6 +98,7 @@ func (handler CommandHandler) MustGet(name string) *Command {
 	}
 	return cmd
 }
+*/
 
 //
 // Register adds a new command function and its stringified name
@@ -104,6 +106,7 @@ func (handler CommandHandler) MustGet(name string) *Command {
 //
 func (handler CommandHandler) Register(name string, cmdFunc func(Context)) *Command {
 	cmd := new(Command)
+	cmd.Name = name
 	cmd.CmdFunc = cmdFunc
 	cmd.CmdSyntax = ""
 	cmd.CmdDesc = "<not defined>"
@@ -171,9 +174,8 @@ func (command Command) HasOnlyOptionalArgs() bool {
 // ValidateArgs is a helper method to validate arguments
 // of a given command
 //
-func (command Command) ValidateArgs(ctx Context) bool {
-	if len(ctx.Args) < command.GetArgsCount() {
-		ctx.Reply(fmt.Sprintf("Invalid syntax: s!%s %s", ctx.CmdName, command.CmdSyntax))
+func (command Command) ValidateArgs(lenInputArgs int) bool {
+	if lenInputArgs < command.GetArgsCount() {
 		return false
 	}
 	return true

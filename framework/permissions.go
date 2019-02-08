@@ -47,7 +47,7 @@ func validateRole(sess *discordgo.Session, guild *discordgo.Guild, roles []*disc
 		log.Printf("role '%s' does not exist in guild (%s), creating...", name, guild.Name)
 		role, err = createRole(sess, guild, name, hoist)
 		if err != nil {
-			log.Printf("error creating role,", err)
+			log.Println("error creating role,", err)
 			return nil, err
 		}
 	} else {

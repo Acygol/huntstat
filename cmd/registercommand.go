@@ -1,7 +1,7 @@
 package cmd
 
 import (
-	"fmt"
+	"log"
 
 	"github.com/acygol/huntstat/framework"
 )
@@ -11,7 +11,7 @@ import (
 // and registers a discord user to a community
 //
 func RegisterCommand(ctx framework.Context) {
-	if !ctx.CmdHandler.MustGet(ctx.CmdName).ValidateArgs(ctx) {
+	if !ctx.Cmd.ValidateArgs(len(ctx.Args)) {
 		return
 	}
 
@@ -27,8 +27,12 @@ func RegisterCommand(ctx framework.Context) {
 
 	_, err := framework.NewUser(ctx, framework.GetIDFromMention(ctx.Args[0]), ctx.Args[1])
 	if err != nil {
-		ctx.Reply("Failed to register user. Contact the bot maintainer for more information")
-		fmt.Println("Failed to register user (", ctx.Guild.ID, ctx.Args[0], ctx.Args[1], "),", err)
+		if err == framework.ErrAlreadyInGuild {
+			ctx.Reply("User is already registered in this community.")
+		} else {
+			ctx.Reply("Failed to register user. Contact the bot maintainer for more information.")
+		}
+		log.Println("Failed to register user (", ctx.Guild.ID, ctx.Args[0], ctx.Args[1], "),", err)
 		return
 	}
 	ctx.Reply("User " + ctx.Args[0] + " registered as " + ctx.Args[1])
