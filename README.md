@@ -94,3 +94,10 @@ $ ./huntstat
 $ cd \path\to\project\root\
 $ .\huntstat.exe
 ```
+
+# Project status: Unmaintained
+The project has reached its peak in terms of functionality given the restrictions. It does what it was made to do plus some. Anything added at this point is additional. The game does not have a public API and the project can't progress without access. I could continue to refactor the code endlessly but since the bot isn't used by anyone but myself there is no point in doing so.
+
+I will change this unmaintained status if the use of it ever increases or if I am ever granted access to their private API. However, I will gladly continue to accept any contributions made in the form of PRs despite this.
+
+Discord server: https://discord.gg/p8SQFVK 
